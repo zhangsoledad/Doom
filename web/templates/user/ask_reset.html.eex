@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Doom | Reset Password</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="#"><b>Doom</b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Sign in to start your session</p>
+
+    <%= form_for @conn, "/post_reset", [as: :user], fn f -> %>
+      <div class="form-group has-feedback">
+        <%= email_input f, :email, class: "form-control", required: "", placeholder: "Email" %>
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Send Mail</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <br>
+
+  <%= render Doom.SharedView, "flash.html", assigns %>
+</div>
+</body>
+</html>

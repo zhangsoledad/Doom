@@ -1,0 +1,29 @@
+language: elixir
+
+elixir:
+  - 1.2.2
+otp_release:
+  - 18.2.1
+
+addons:
+  postgresql: "9.4"
+
+services:
+  - postgresql
+
+cache:
+  directories:
+    - _build
+    - deps
+
+sudo: false
+
+before_script:
+  - psql -c "CREATE USER \"doom_test\" WITH SUPERUSER CREATEDB PASSWORD 'doom_test';" -U postgres
+  - mix local.hex --force
+  - mix local.rebar
+  - mix deps.get --only test
+  - MIX_ENV=test mix ecto.reset
+
+script:
+  - mix test

@@ -1,0 +1,33 @@
+<h2>Show task</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @task.name %>
+  </li>
+
+  <li>
+    <strong>Interval:</strong>
+    <%= @task.interval %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @task.url %>
+  </li>
+
+  <li>
+    <strong>Params:</strong>
+    <%= @task.params %>
+  </li>
+
+  <li>
+    <strong>Expect:</strong>
+    <%= @task.expect %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: task_path(@conn, :edit, @task) %>
+<%= link "Back", to: task_path(@conn, :index) %>
