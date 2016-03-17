@@ -1,9 +1,9 @@
 language: elixir
 
 elixir:
-  - 1.2.2
+  - 1.2.3
 otp_release:
-  - 18.2.1
+  - 18.3
 
 addons:
   postgresql: "9.4"
@@ -16,7 +16,8 @@ cache:
     - _build
     - deps
 
-sudo: false
+before_install:
+   - cp config/mailer.example.exs config/mailer.exs
 
 before_script:
   - psql -c "CREATE USER \"doom_test\" WITH SUPERUSER CREATEDB PASSWORD 'doom_test';" -U postgres
