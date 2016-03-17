@@ -1,3 +1,3 @@
-# Monitor Api System
+# Api Monitor System
 
-[![Build Status](https://travis-ci.org/zhangsoledad/doom.svg?branch=master)](https://travis-ci.org/zhangsoledad/doom)
+[![Build Status](https://travis-ci.org/zhangsoledad/Doom.svg?branch=master)](https://travis-ci.org/zhangsoledad/Doom)
