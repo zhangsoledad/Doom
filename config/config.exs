@@ -30,7 +30,6 @@ config :phoenix, :generators,
   binary_id: false
 
 config :openmaize,
-  redirect_pages: %{"login" => "/login", "admin" => "/", "user" => "/", "logout" => "/login"},
   user_model: Doom.User,
   repo: Doom.Repo,
   password_strength: [min_length: 6, extra_chars: false]

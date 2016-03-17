@@ -27,7 +27,8 @@ defmodule Doom.Mixfile do
 
   defp applications(_) do
     [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-     :phoenix_ecto, :postgrex, :quantum, :timex, :httpoison, :not_qwerty123, :openmaize]
+     :phoenix_ecto, :postgrex, :quantum, :httpoison, :not_qwerty123, :openmaize,
+     :calendar, :calecto, :phoenix_calendar]
   end
 
   # Specifies which paths to compile per environment.
@@ -47,10 +48,11 @@ defmodule Doom.Mixfile do
      {:cowboy, "~> 1.0"},
      {:quantum, "~> 1.7.0"},
      {:exrm, "~> 1.0.2"},
-     {:timex, "~> 2.1.1"},
-     {:timex_ecto, "~> 1.0.3"},
+     {:phoenix_calendar, "~> 0.1.2"},
+     {:calecto, "~> 0.5.2"},
+     {:calendar, "~> 0.13"},
      {:httpoison, "~> 0.8.1"},
-     {:not_qwerty123, "~> 1.0"},
+     {:not_qwerty123, "~> 1.1"},
      {:openmaize, github: "zhangsoledad/openmaize"},
      {:scrivener, "~> 1.1"},
      {:mailman, "~> 0.2.2"},

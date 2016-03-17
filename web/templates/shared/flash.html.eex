@@ -1,5 +1,5 @@
 <%= if errors = get_flash(@conn, :errors) do %>
-  <%= for {attr, message} <- errors do %>
+  <%= for {_, message} <- errors do %>
     <div class="alert alert-danger alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <strong>Error!</strong> <%= translate_error(message) %>

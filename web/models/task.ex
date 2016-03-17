@@ -9,7 +9,7 @@ defmodule Doom.Task do
     field :params, :map
     field :expect, :map
     field :active, :boolean, default: true
-    field :silence_at, Timex.Ecto.DateTime
+    field :silence_at, Calecto.DateTimeUTC
 
     belongs_to :group, Doom.Group
     timestamps

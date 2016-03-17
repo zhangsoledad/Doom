@@ -1,13 +1,14 @@
 defmodule Doom.AdminController do
   use Doom.Web, :controller
 
-  import Openmaize.AccessControl
+  import Doom.Authorize
 
-  alias Openmaize.ConfirmTools
+  alias Openmaize.ConfirmEmail
   alias Doom.{Mailer, User}
 
-  plug :authorize, roles: ["admin"]
   plug :scrub_params, "user" when action in [:register_user]
+
+  def action(conn, _), do: authorize_action conn, ["admin"], __MODULE__
 
   def index(conn, params) do
     page = Map.get(params, "page", 1)
@@ -16,7 +17,7 @@ defmodule Doom.AdminController do
   end
 
   def register_user(conn, %{"user" => %{"email" => email} = user_params}) do
-    {key, link} = ConfirmTools.gen_token_link(email)
+    {key, link} = ConfirmEmail.gen_token_link(email)
     changeset = user_params
     |> Map.put_new("username", user_params["email"] |> String.split("@") |> hd)
     |> User.register_changeset(key)
