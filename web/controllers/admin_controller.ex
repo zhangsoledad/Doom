@@ -4,7 +4,7 @@ defmodule Doom.AdminController do
   import Doom.Authorize
 
   alias Openmaize.ConfirmEmail
-  alias Doom.{Mailer, User}
+  alias Doom.{Mailer, User, Group}
 
   plug :scrub_params, "user" when action in [:register_user]
 
@@ -13,7 +13,9 @@ defmodule Doom.AdminController do
   def index(conn, params) do
     page = Map.get(params, "page", 1)
     users = User |> Repo.paginate(page: page)
-    render conn,"index.html", users: users
+    all_groups =  Repo.all from g in Group, select: {g.name, g.id}
+    changeset = User.changeset(%User{})
+    render conn,"index.html", users: users, all_groups: all_groups, changeset: changeset
   end
 
   def register_user(conn, %{"user" => %{"email" => email} = user_params}) do

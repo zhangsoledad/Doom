@@ -1,6 +1,22 @@
-<h2>New task</h2>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Task
+    <small>Manage Task</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-dashboard"></i>Home</a></li>
+    <li><a href="/tasks">Task</a></li>
+    <li class="active"><a href="#">New</a></li>
+  </ol>
+</section>
 
-<%= render "form.html", changeset: @changeset,
-                        action: task_path(@conn, :create) %>
 
-<%= link "Back", to: task_path(@conn, :index) %>
+<section class="content">
+  <div class="row">
+    <div class="col-md-10">
+
+      <%= render Doom.TaskView, "_form.html", changeset: @changeset, action: task_path(@conn, :create), all_groups: @all_groups  %>
+    </div>
+  </div>
+</section>

@@ -6,12 +6,14 @@ defmodule Doom.Task do
     field :interval, :integer
     field :url, :string
     field :method, :string
+    field :type, :string
+    field :headers, :map
     field :params, :map
     field :expect, :map
     field :active, :boolean, default: true
     field :silence_at, Calecto.DateTimeUTC
 
-    belongs_to :group, Doom.Group
+    many_to_many :groups, Doom.Group, join_through: "tasks_groups"
     timestamps
   end
 
@@ -24,9 +26,10 @@ defmodule Doom.Task do
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> cast_assoc(:groups)
   end
 
 

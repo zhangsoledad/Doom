@@ -26,4 +26,6 @@ $(function () {
     radioClass: 'iradio_minimal',
     increaseArea: '20%'
   });
+
+  $('.chosen-select').chosen({allow_single_deselect: true, width: "50%"});
 });

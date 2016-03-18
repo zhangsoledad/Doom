@@ -1,12 +1,15 @@
 defmodule Doom.GroupController do
   use Doom.Web, :controller
 
+  import Doom.Authorize
   alias Doom.Group
 
+  def action(conn, _), do: authorize_action conn, ["admin", "user"], __MODULE__
   plug :scrub_params, "group" when action in [:create, :update]
 
-  def index(conn, _params) do
-    groups = Repo.all(Group)
+  def index(conn, params) do
+    page = Map.get(params, "page", 1)
+    groups = Group |> Repo.paginate(page: page)
     render(conn, "index.html", groups: groups)
   end
 
@@ -47,7 +50,7 @@ defmodule Doom.GroupController do
       {:ok, group} ->
         conn
         |> put_flash(:info, "Group updated successfully.")
-        |> redirect(to: group_path(conn, :show, group))
+        |> redirect(to: group_path(conn, :edit, group))
       {:error, changeset} ->
         render(conn, "edit.html", group: group, changeset: changeset)
     end

@@ -4,12 +4,13 @@ defmodule Doom.Group do
   schema "groups" do
     field :name, :string
 
-    has_many :users, Doom.User
-    has_many :tasks, Doom.Task
+    many_to_many :users, Doom.User, join_through: "users_groups"
+    many_to_many :tasks, Doom.Task, join_through: "tasks_groups"
+
     timestamps
   end
 
-  @required_fields ~w()
+  @required_fields ~w(name)
   @optional_fields ~w()
 
   @doc """
@@ -18,7 +19,7 @@ defmodule Doom.Group do
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
   end

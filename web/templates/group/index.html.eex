@@ -1,24 +1,61 @@
-<h2>Listing groups</h2>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Group
+    <small>All groups</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-dashboard"></i>Home</a></li>
+    <li class="active"><a href="#">Group</a></li>
+  </ol>
+</section>
 
-<table class="table">
-  <thead>
-    <tr>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Task</h3>
+          <div class="box-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+              <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for group <- @groups do %>
-    <tr>
-
-      <td class="text-right">
-        <%= link "Show", to: group_path(@conn, :show, group), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: group_path(@conn, :edit, group), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: group_path(@conn, :delete, group), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
-<%= link "New group", to: group_path(@conn, :new) %>
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th style="width: 10px">#</th>
+                <th>Name</th>
+                <th>Action</th>
+              </tr>
+              <%= for group <- @groups.entries do %>
+                <tr>
+                  <td><%= group.id %></td>
+                  <td><%= group.name %></td>
+                  <td class="text-right">
+                    <%= link to: group_path(@conn, :edit, group), class: "btn btn-default btn-sm" do %>
+                      <i class="fa fa-folder"></i>  Edit
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <%= pagination(@groups, &group_path(@conn, :index, &1), @conn.params) %>
+        </div>
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
+</section>

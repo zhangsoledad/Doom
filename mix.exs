@@ -41,7 +41,7 @@ defmodule Doom.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.1.4"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_ecto, "~> 2.0"},
+     {:phoenix_ecto, "~> 3.0.0-beta"},
      {:phoenix_html, "~> 2.5.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
@@ -54,7 +54,7 @@ defmodule Doom.Mixfile do
      {:httpoison, "~> 0.8.1"},
      {:not_qwerty123, "~> 1.1"},
      {:openmaize, github: "zhangsoledad/openmaize"},
-     {:scrivener, "~> 1.1"},
+     {:scrivener, github: "zhangsoledad/scrivener"},
      {:mailman, "~> 0.2.2"},
      {:ex_machina, "~> 0.6.1", only: :test},
      {:credo, "~> 0.3", only: [:dev, :test]}]

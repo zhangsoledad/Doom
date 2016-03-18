@@ -24,7 +24,7 @@ defmodule Doom.Web do
 
       import Ecto
       import Ecto.Changeset
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query
     end
   end
 
@@ -35,7 +35,7 @@ defmodule Doom.Web do
 
       alias Doom.Repo
       import Ecto
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query
 
       import Doom.Router.Helpers
       import Doom.Gettext
@@ -73,7 +73,7 @@ defmodule Doom.Web do
 
       alias Doom.Repo
       import Ecto
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query
       import Doom.Gettext
     end
   end

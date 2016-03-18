@@ -1,17 +1,12 @@
-defmodule Doom.AlertRecord do
+defmodule Doom.TaskGroup do
   use Doom.Web, :model
 
-  schema "alert_records" do
-    field :expect, :map
-    field :result, :map
-    field :status_code, :integer
-    field :reason, :string
+  schema "tasks_groups" do
 
-    belongs_to :task, Doom.Task
     timestamps
   end
 
-  @required_fields ~w(expect)
+  @required_fields ~w()
   @optional_fields ~w()
 
   @doc """

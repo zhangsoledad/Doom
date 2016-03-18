@@ -17,7 +17,7 @@ defmodule Doom.Router do
   scope "/", Doom do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", TaskController, :index
 
     resources "/admin", AdminController, only: [:index]
     post "/register_user", AdminController, :register_user

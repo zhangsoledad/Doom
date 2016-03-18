@@ -18,7 +18,8 @@ exports.config = {
           "web/static/vendor/js/jquery.slimscroll.js",
           "web/static/vendor/js/fastclick.js",
           "web/static/vendor/js/admin-lte.js",
-          "web/static/vendor/js/icheck.js"
+          "web/static/vendor/js/icheck.js",
+          "web/static/vendor/js/chosen.jquery.js"
         ]
       }
     },
@@ -31,7 +32,8 @@ exports.config = {
           "web/static/vendor/css/ionicons.css",
           "web/static/vendor/css/admin-lte.css",
           "web/static/vendor/css/skin-blue.css",
-          "web/static/vendor/css/minimal.css"
+          "web/static/vendor/css/minimal.css",
+          "web/static/vendor/css/chosen.css"
         ]
       }
     },

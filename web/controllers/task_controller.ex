@@ -1,18 +1,22 @@
 defmodule Doom.TaskController do
   use Doom.Web, :controller
 
-  alias Doom.Task
+  import Doom.Authorize
+  alias Doom.{Task, Group}
 
+  def action(conn, _), do: authorize_action conn, ["admin", "user"], __MODULE__
   plug :scrub_params, "task" when action in [:create, :update]
 
-  def index(conn, _params) do
-    tasks = Repo.all(Task)
-    render(conn, "index.html", tasks: tasks)
+  def index(conn, params) do
+    page = Map.get(params, "page", 1)
+    tasks = Task |> Repo.paginate(page: page)
+    render conn,"index.html", tasks: tasks
   end
 
   def new(conn, _params) do
     changeset = Task.changeset(%Task{})
-    render(conn, "new.html", changeset: changeset)
+    all_groups =  Repo.all from g in Group, select: {g.name, g.id}
+    render(conn, "new.html", changeset: changeset, all_groups: all_groups)
   end
 
   def create(conn, %{"task" => task_params}) do
@@ -36,7 +40,8 @@ defmodule Doom.TaskController do
   def edit(conn, %{"id" => id}) do
     task = Repo.get!(Task, id)
     changeset = Task.changeset(task)
-    render(conn, "edit.html", task: task, changeset: changeset)
+    all_groups =  Repo.all from g in Group, select: {g.name, g.id}
+    render(conn, "edit.html", task: task, changeset: changeset, all_groups: all_groups)
   end
 
   def update(conn, %{"id" => id, "task" => task_params}) do

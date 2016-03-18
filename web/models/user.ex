@@ -14,7 +14,7 @@ defmodule Doom.User do
     field :reset_sent_at, Ecto.DateTime
     field :bio, :string
 
-    belongs_to :group, Doom.Group
+    many_to_many :groups, Doom.Group, join_through: "users_groups"
     timestamps
   end
 
@@ -28,7 +28,7 @@ defmodule Doom.User do
   with no validation performed.
   """
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, ~w(email role), ~w(username bio))
     |> validate_length(:username, min: 1, max: 30)

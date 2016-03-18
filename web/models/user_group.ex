@@ -1,17 +1,12 @@
-defmodule Doom.AlertRecord do
+defmodule Doom.UserGroup do
   use Doom.Web, :model
 
-  schema "alert_records" do
-    field :expect, :map
-    field :result, :map
-    field :status_code, :integer
-    field :reason, :string
+  schema "users_groups" do
 
-    belongs_to :task, Doom.Task
     timestamps
   end
 
-  @required_fields ~w(expect)
+  @required_fields ~w()
   @optional_fields ~w()
 
   @doc """
@@ -20,7 +15,7 @@ defmodule Doom.AlertRecord do
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
-  def changeset(model, params \\ %{}) do
+  def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
   end

@@ -1,6 +1,21 @@
-<h2>New group</h2>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Group
+    <small>Manage Group</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-dashboard"></i>Home</a></li>
+    <li><a href="/groups">Group</a></li>
+    <li class="active"><a href="#">New</a></li>
+  </ol>
+</section>
 
-<%= render "form.html", changeset: @changeset,
-                        action: group_path(@conn, :create) %>
 
-<%= link "Back", to: group_path(@conn, :index) %>
+<section class="content">
+  <div class="row">
+    <div class="col-md-10">
+      <%= render Doom.GroupView, "_form.html", changeset: @changeset, action: group_path(@conn, :create)  %>
+    </div>
+  </div>
+</section>

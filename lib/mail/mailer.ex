@@ -3,9 +3,9 @@ defmodule Doom.Mailer do
 
   @from Application.get_env(:doom, :mailer)[:username]
 
-  # send_notify(["787953403@qq.com"], "baozha", ["yo"])
-  def send_notify(to, subject, data , cc \\ [], bcc \\ []) do
-    html = Templates.notify_text(data)
+  # send_alert(["787953403@qq.com"], "baozha", ["yo"])
+  def send_alert(to, subject, data , cc \\ [], bcc \\ []) do
+    html = Templates.send_alert(data)
     %Mailman.Email{
       subject: subject,
       from: @from,

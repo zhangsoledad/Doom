@@ -1,34 +1,78 @@
-<h2>Listing tasks</h2>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Task
+    <small>All tasks</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-dashboard"></i>Home</a></li>
+    <li class="active"><a href="#">Task</a></li>
+  </ol>
+</section>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Interval</th>
-      <th>Url</th>
-      <th>Params</th>
-      <th>Expect</th>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Task</h3>
+          <div class="box-tools">
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for task <- @tasks do %>
-    <tr>
-      <td><%= task.name %></td>
-      <td><%= task.interval %></td>
-      <td><%= task.url %></td>
-      <td><%= task.params %></td>
-      <td><%= task.expect %></td>
-
-      <td class="text-right">
-        <%= link "Show", to: task_path(@conn, :show, task), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: task_path(@conn, :edit, task), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
-<%= link "New task", to: task_path(@conn, :new) %>
+            <div class="input-group input-group-sm" style="width: 150px;">
+              <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th style="width: 10px">#</th>
+                <th>Name</th>
+                <th>Interval</th>
+                <th>Url</th>
+                <th>Method</th>
+                <th>Type</th>
+                <th>Headers</th>
+                <th>Params</th>
+                <th>Expect</th>
+                <th>Active</th>
+                <th>SilenceAt</th>
+                <th>Group</th>
+                <th>Action</th>
+              </tr>
+              <%= for task <- @tasks.entries do %>
+                <tr>
+                  <td><%= task.id %></td>
+                  <td><%= task.interval %></td>
+                  <td><%= task.url %></td>
+                  <td><%= task.method %></td>
+                  <td><%= task.type %></td>
+                  <td><%= task.headers %></td>
+                  <td><%= task.params %></td>
+                  <td><%= task.expect %></td>
+                  <td><%= task.active %></td>
+                  <td><%= task.silence_at %></td>
+                  <td><%= task.group_id %></td>
+                  <td class="text-right">
+                    <%= link "Edit", to: task_path(@conn, :edit, task), class: "btn btn-default btn-xs" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <%= pagination(@tasks, &task_path(@conn, :index, &1), @conn.params) %>
+        </div>
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
+</section>

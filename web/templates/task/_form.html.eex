@@ -1,0 +1,58 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">New Task</h3>
+  </div>
+  <%= form_for @changeset, @action, fn f -> %>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <div class="box-body">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <%= text_input f, :name, placeholder: "Name", class: "form-control", required: true %>
+      </div>
+      <div class="form-group">
+        <label for="interval">Interval</label>
+        <%= number_input f, :interval, placeholder: "Interval", class: "form-control", min: 1 %>
+      </div>
+      <div class="form-group">
+        <label for="interval">Url</label>
+        <%= url_input f, :url, placeholder: "Url", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <label for="method">Method</label>
+        <%= select f, :method, ["get","post","put", "patch"], prompt: "Choose request method", required: true, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <label for="headers">Headers</label>
+        <%= textarea f, :headers, placeholder: "Headers", class: "form-control"%>
+      </div>
+      <div class="form-group">
+        <label for="params">Params</label>
+        <%= textarea f, :params, placeholder: "Params", class: "form-control"%>
+      </div>
+      <div class="form-group">
+        <label for="expect">Expect</label>
+        <%= textarea f, :expect, placeholder: "Expect", class: "form-control", required: true %>
+      </div>
+      <div class="form-group">
+        <label for="active">Active</label>&nbsp;
+        <%= checkbox f, :active , class: "minimal-check", checked_value: true, unchecked_value: false %>
+      </div>
+
+      <div class="form-group">
+        <label for="group">Group</label></br>
+        <%= multiple_select f, :groups, @all_groups,
+            selected:  (Map.get(@changeset, :groups) || [] ) |>  Enum.map(& &1.id) ,
+            class: "form-control chosen-select",
+            data: [placeholder: "Choose Group"] %>
+      </div>
+    </div>
+    <div class="box-footer">
+      <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
