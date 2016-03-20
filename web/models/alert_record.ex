@@ -11,8 +11,8 @@ defmodule Doom.AlertRecord do
     timestamps
   end
 
-  @required_fields ~w(expect)
-  @optional_fields ~w()
+  @required_fields ~w(expect task_id)
+  @optional_fields ~w(status_code reason result)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

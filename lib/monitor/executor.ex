@@ -30,7 +30,7 @@ defmodule Doom.Monitor.Executor do
   end
 
   defp process_result(false, code , body, task) when is_map(body) do
-    %{task_id: task.id, reason: 'not match', status_code: code, expect: task.expect, result: body}
+    %{task_id: task.id, reason: "not match", status_code: code, expect: task.expect, result: body}
     |> send_alert(task)
   end
 
@@ -50,7 +50,7 @@ defmodule Doom.Monitor.Executor do
   end
 
   defp send_alert(alert, task) do
-    alert_record = AlertRecord.changeset(%AlertRecord{}, alert) |> Repo.insert
+    alert_record = AlertRecord.changeset(%AlertRecord{}, alert) |> Repo.insert!
     groups = Repo.all(Ecto.assoc(task, :groups))
     user_email = groups
                 |> Enum.map(&Repo.all(Ecto.assoc(&1, :users)))
