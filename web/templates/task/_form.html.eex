@@ -28,15 +28,15 @@
       </div>
       <div class="form-group">
         <label for="headers">Headers</label>
-        <%= textarea f, :headers, placeholder: "Headers", class: "form-control"%>
+        <%= textarea f, :headers, placeholder: "Headers", value: Poison.encode!(field_value(f, :headers)) ,class: "form-control"%>
       </div>
       <div class="form-group">
         <label for="params">Params</label>
-        <%= textarea f, :params, placeholder: "Params", class: "form-control"%>
+        <%= textarea f, :params, placeholder: "Params", value: Poison.encode!(field_value(f, :params)), class: "form-control"%>
       </div>
       <div class="form-group">
         <label for="expect">Expect</label>
-        <%= textarea f, :expect, placeholder: "Expect", class: "form-control", required: true %>
+        <%= textarea f, :expect, placeholder: "Expect",  value: Poison.encode!(field_value(f, :expect)),class: "form-control", required: true %>
       </div>
       <div class="form-group">
         <label for="active">Active</label>&nbsp;
@@ -46,9 +46,10 @@
       <div class="form-group">
         <label for="group">Group</label></br>
         <%= multiple_select f, :groups, @all_groups,
-            selected:  (Map.get(@changeset, :groups) || [] ) |>  Enum.map(& &1.id) ,
+            selected:  (Map.get(@changeset.data, :groups) || [] ) |>  Enum.map(& "#{&1.id}"),
             class: "form-control chosen-select",
-            data: [placeholder: "Choose Group"] %>
+            data: [placeholder: "Choose Group"],
+            name: "group_ids[]" %>
       </div>
     </div>
     <div class="box-footer">

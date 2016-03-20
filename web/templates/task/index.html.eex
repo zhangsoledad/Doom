@@ -32,7 +32,7 @@
           <table class="table table-bordered">
             <tbody>
               <tr>
-                <th style="width: 10px">#</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>Interval</th>
                 <th>Url</th>
@@ -43,22 +43,21 @@
                 <th>Expect</th>
                 <th>Active</th>
                 <th>SilenceAt</th>
-                <th>Group</th>
                 <th>Action</th>
               </tr>
               <%= for task <- @tasks.entries do %>
                 <tr>
                   <td><%= task.id %></td>
+                  <td><%= task.name %></td>
                   <td><%= task.interval %></td>
                   <td><%= task.url %></td>
                   <td><%= task.method %></td>
                   <td><%= task.type %></td>
-                  <td><%= task.headers %></td>
-                  <td><%= task.params %></td>
-                  <td><%= task.expect %></td>
+                  <td><%= inspect task.headers %></td>
+                  <td><%= inspect task.params %></td>
+                  <td><%= inspect task.expect %></td>
                   <td><%= task.active %></td>
                   <td><%= task.silence_at %></td>
-                  <td><%= task.group_id %></td>
                   <td class="text-right">
                     <%= link "Edit", to: task_path(@conn, :edit, task), class: "btn btn-default btn-xs" %>
                   </td>

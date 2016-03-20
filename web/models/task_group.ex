@@ -2,8 +2,6 @@ defmodule Doom.TaskGroup do
   use Doom.Web, :model
 
   schema "tasks_groups" do
-
-    timestamps
   end
 
   @required_fields ~w()

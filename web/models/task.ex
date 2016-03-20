@@ -13,12 +13,12 @@ defmodule Doom.Task do
     field :active, :boolean, default: true
     field :silence_at, Calecto.DateTimeUTC
 
-    many_to_many :groups, Doom.Group, join_through: "tasks_groups"
+    many_to_many :groups, Doom.Group, join_through: "tasks_groups", on_replace: :delete
     timestamps
   end
 
   @required_fields ~w(name interval url params expect)
-  @optional_fields ~w()
+  @optional_fields ~w(method active type)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

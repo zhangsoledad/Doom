@@ -14,7 +14,7 @@ defmodule Doom.User do
     field :reset_sent_at, Ecto.DateTime
     field :bio, :string
 
-    many_to_many :groups, Doom.Group, join_through: "users_groups"
+    many_to_many :groups, Doom.Group, join_through: "users_groups", on_replace: :delete
     timestamps
   end
 
