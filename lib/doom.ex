@@ -22,7 +22,7 @@ defmodule Doom do
     opts = [strategy: :one_for_one, name: Doom.Supervisor]
     result = Supervisor.start_link(children, opts)
 
-    Doom.Task.init
+    Doom.Monitor.Job.init
     result
   end
 

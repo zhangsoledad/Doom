@@ -5,7 +5,7 @@ defmodule Doom.Mailer do
 
   # send_alert(["787953403@qq.com"], "baozha", ["yo"])
   def send_alert(to, subject, data , cc \\ [], bcc \\ []) do
-    html = Templates.send_alert(data)
+    html = Templates.alert_html(data)
     %Mailman.Email{
       subject: subject,
       from: @from,

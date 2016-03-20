@@ -77,5 +77,6 @@ users = [
   }
 ]
 
-Doom.Repo.insert_all User, users
-
+for user <- users do
+  Map.merge(%Doom.User{}, user) |> Doom.Repo.insert!
+end

@@ -1,16 +1,28 @@
 defmodule Doom.Monitor.Executor do
-  import Ecto
-  import Ecto.Query
+  alias Task.Supervisor, as: TaskSup
+  require Logger
+
   alias Doom.{Task, AlertRecord, User}
   alias Doom.Repo
 
-  def execute(%Task{} = task) do
-    Task.Supervisor.async_nolink(Doom.TasksSupervisor, Doom.Monitor.Executor, :execute_async, [task])
+  def execute(task_id) do
+    TaskSup.async_nolink(Doom.TasksSupervisor, Doom.Monitor.Executor, :execute_async, [task_id])
   end
 
-  def execute_async(%Task{url: url, params: params, headers: headers} = task) do
-    response = process_request(task.method, url, headers, params)
-    |> process_json_body(task)
+  def execute_async(task_id) do
+    task = Repo.get(Task, task_id) |> Repo.preload(:groups)
+    process_task(task)
+  end
+
+  def process_task(task) do
+    case task.active do
+      true ->
+         response = process_request(task.method, task.url, task.headers, task.params)
+         |> process_json_body(task)
+         #Logger.debug inspect(response)
+      _ ->
+        :ok
+    end
   end
 
   defp process_result(true, code , body, task) when is_map(body) do
@@ -41,19 +53,20 @@ defmodule Doom.Monitor.Executor do
     alert_record = AlertRecord.changeset(%AlertRecord{}, alert) |> Repo.insert
     groups = Repo.all(Ecto.assoc(task, :groups))
     user_email = groups
-                |> Enum.map(&Repo.all(Ecto.assoc(&1, :groups)))
+                |> Enum.map(&Repo.all(Ecto.assoc(&1, :users)))
                 |> List.flatten
                 |> Enum.map(&(&1.email))
                 |> Enum.uniq
-    Doom.Mailer.send_alert(user_email, "baozha", ["yo"])
+    Doom.Mailer.send_alert(user_email, "baozha", ["yo", "as"])
   end
 
 
   defp process_json_body(body, task) do
     case body do
       {:ok, %HTTPoison.Response{status_code: code, body: body }} ->
-        tbody = body |> Map.take(Map.keys(task.expect))
-        process_result( Map.equal?(tbody ,task.expect), code , body, task)
+        json_body = body |> Poison.decode!
+        tbody = json_body |> Map.take(Map.keys(task.expect))
+        process_result( Map.equal?(tbody ,task.expect), code , json_body, task)
       {:ok, %HTTPoison.Response{status_code: code}} ->
         process_result(false, code , "No body return", task)
       {:error, %HTTPoison.Error{reason: reason}} ->
@@ -64,22 +77,22 @@ defmodule Doom.Monitor.Executor do
   end
 
   defp process_request("get", url, headers, params) do
-    HTTPoison.get(url, headers, params: params)
+    HTTPoison.get(url, Map.to_list(headers || %{}), params: params)
   end
 
   defp process_request("post", url, headers, params) do
-    HTTPoison.post(url, params, headers)
+    HTTPoison.post(url, params, Map.to_list(headers))
   end
 
   defp process_request("patch", url, headers, params) do
-    HTTPoison.patch(url, params, headers)
+    HTTPoison.patch(url, params, Map.to_list(headers))
   end
 
   defp process_request("put", url, headers, params) do
-    HTTPoison.put(url, params, headers)
+    HTTPoison.put(url, params, Map.to_list(headers))
   end
 
   defp process_request("options", url, headers, params) do
-    HTTPoison.options(url, params, headers)
+    HTTPoison.options(url, params, Map.to_list(headers))
   end
 end

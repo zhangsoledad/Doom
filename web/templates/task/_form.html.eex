@@ -46,7 +46,7 @@
       <div class="form-group">
         <label for="group">Group</label></br>
         <%= multiple_select f, :groups, @all_groups,
-            selected:  (Map.get(@changeset.data, :groups) || [] ) |>  Enum.map(& "#{&1.id}"),
+            selected: (if @path === "edit", do: Map.get(@changeset.data, :groups), else: []) |>  Enum.map(& "#{&1.id}"),
             class: "form-control chosen-select",
             data: [placeholder: "Choose Group"],
             name: "group_ids[]" %>
