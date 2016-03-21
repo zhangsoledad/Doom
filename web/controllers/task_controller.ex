@@ -22,8 +22,16 @@ defmodule Doom.TaskController do
 
   def create(conn, %{"task" => task_params} = params) do
     groups = Repo.all(from(g in Group, where: g.id in ^params["group_ids"]))
-    changeset = Task.changeset(%Task{}, process_task_params(task_params))
-    |> Ecto.Changeset.put_assoc(:groups, groups)
+
+    changeset = case process_task_params(task_params) do
+      {:ok, result} ->
+        Task.changeset(%Task{}, result)
+      {:error, message} ->
+        conn
+        |> put_flash(:error, message)
+        |> redirect(to: task_path(conn, :index))
+    end |> Ecto.Changeset.put_assoc(:groups, groups)
+
     case Repo.insert(changeset) do
       {:ok, task} ->
         task
@@ -55,7 +63,16 @@ defmodule Doom.TaskController do
     groups_changesets = Enum.map(groups, &Ecto.Changeset.change/1)
 
     task = Repo.get!(Task, id) |> Repo.preload(:groups)
-    changeset = Task.changeset(task, process_task_params(task_params))
+
+    changeset = case process_task_params(task_params) do
+      {:ok, result} ->
+        Task.changeset(task, result)
+      {:error, message} ->
+        conn
+        |> put_flash(:error, message)
+        |> redirect(to: task_path(conn, :index))
+    end |> Ecto.Changeset.put_assoc(:groups, groups_changesets)
+
     |> Ecto.Changeset.put_assoc(:groups, groups_changesets)
 
     case Repo.update(changeset) do
@@ -82,14 +99,19 @@ defmodule Doom.TaskController do
   end
 
   defp process_task_params(task_params) do
-    jheader = process_headers task_params["headers"]
-    jparams = process_params task_params["params"]
-    jexpect = process_expect task_params["expect"]
-    Map.merge(task_params,
-              %{"headers"=> jheader,
-              "params"=> jparams,
-              "expect"=> jexpect}
-              )
+    try do
+      jheader = process_headers task_params["headers"]
+      jparams = process_params task_params["params"]
+      jexpect = process_expect task_params["expect"]
+      result =  Map.merge(task_params,
+                %{"headers"=> jheader,
+                "params"=> jparams,
+                "expect"=> jexpect}
+                )
+      {:ok, result}
+    rescue
+      e in Poison.SyntaxError -> {:error, e.message}
+    end
   end
 
   defp process_headers(nil) do

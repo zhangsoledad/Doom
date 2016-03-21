@@ -14,6 +14,7 @@
 <section class="content">
   <div class="row">
     <div class="col-md-12">
+      <%= render Doom.SharedView, "flash.html", assigns %>
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Task</h3>

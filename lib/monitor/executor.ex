@@ -17,8 +17,8 @@ defmodule Doom.Monitor.Executor do
   def process_task(task) do
     case task.active do
       true ->
-         response = process_request(task.method, task.url, task.headers, task.params)
-         |> process_json_body(task)
+        response = process_request(task.method, task.url, task.headers, task.params)
+        |> process_json_body(task)
          #Logger.debug inspect(response)
       _ ->
         :ok

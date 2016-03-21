@@ -6,7 +6,6 @@ defmodule Doom.Monitor.Job do
 
   def from_task(%Task{id: id} = task) do
     %Job{
-      name: "#{id}",
       schedule: "*/#{task.interval} * * * *",
       task: { Doom.Monitor.Executor, :execute },
       args: [ id ],
@@ -17,9 +16,8 @@ defmodule Doom.Monitor.Job do
   def add(%Task{id: id} = task) do
     case Quantum.find_job("#{id}") do
       nil ->
-        task
-        |> from_task
-        |> Quantum.add_job
+        job = from_task task
+        Quantum.add_job("#{id}", job)
       job ->
         job
     end

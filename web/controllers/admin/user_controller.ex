@@ -18,6 +18,7 @@ defmodule Doom.Admin.UserController do
     render conn,"index.html", users: users, all_groups: all_groups, changeset: changeset
   end
 
+  #TODO: edit user
   def edit(conn, %{"id" => id}) do
     user = Repo.get!(User, id)
     changeset = User.changeset(user)
