@@ -53,6 +53,7 @@ defmodule Doom.Mixfile do
      {:calendar, "~> 0.13"},
      {:httpoison, "~> 0.8.1"},
      {:not_qwerty123, "~> 1.1"},
+     {:floki, "~> 0.8"},
      {:openmaize, github: "zhangsoledad/openmaize"},
      {:scrivener, github: "zhangsoledad/scrivener"},
      {:mailman, "~> 0.2.2"},

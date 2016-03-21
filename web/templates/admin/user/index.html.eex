@@ -14,7 +14,7 @@
 <section class="content">
   <div class="row">
     <div class="col-md-12">
-      <%= render Doom.AdminView, "_register_user.html", assigns%>
+      <%= render Doom.Admin.UserView, "_register_user.html", assigns%>
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">User</h3>
@@ -53,7 +53,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer clearfix">
-          <%= pagination(@users, &admin_path(@conn, :index, &1), @conn.params) %>
+          <%= pagination(@users, &admin_user_path(@conn, :index, &1), @conn.params) %>
         </div>
       </div>
       <!-- /.box -->

@@ -19,9 +19,6 @@ defmodule Doom.Router do
 
     get "/", TaskController, :index
 
-    resources "/admin", AdminController, only: [:index]
-    post "/register_user", AdminController, :register_user
-
     resources "/users", UserController, only: [:update]
     get "/confirm", UserController, :confirm
     get "/ask_reset", UserController, :ask_reset
@@ -37,6 +34,12 @@ defmodule Doom.Router do
     resources "/groups", GroupController
     resources "/tasks", TaskController
   end
+
+   scope "/admin", Doom.Admin, as: :admin do
+     pipe_through :browser
+
+     resources "/users", UserController
+   end
 
   # Other scopes may use custom stacks.
   # scope "/api", Doom do
