@@ -18,7 +18,15 @@ config :doom, Doom.Endpoint,
   server: true
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger,
+  backends: [{LoggerFileBackend, :prod_log}]
+
+
+config :logger, :prod_log,
+  path: "#{Path.dirname(__DIR__)}/log/prod.log",
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id],
+  level: :error
 
 # ## SSL Support
 #

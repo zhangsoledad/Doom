@@ -14,11 +14,6 @@ config :doom, Doom.Endpoint,
   pubsub: [name: Doom.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-# Configures Elixir's Logger
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
-
 config :doom, Doom.Gettext, default_locale: "zh"
 
 # Import environment specific config. This must remain at the bottom

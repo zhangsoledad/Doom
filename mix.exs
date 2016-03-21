@@ -56,6 +56,7 @@ defmodule Doom.Mixfile do
      {:openmaize, github: "zhangsoledad/openmaize"},
      {:scrivener, github: "zhangsoledad/scrivener"},
      {:mailman, "~> 0.2.2"},
+     {:logger_file_backend, "~> 0.0.7"},
      {:ex_machina, "~> 0.6.1", only: :test},
      {:credo, "~> 0.3", only: [:dev, :test]}]
   end
