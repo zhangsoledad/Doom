@@ -3,7 +3,7 @@ defmodule Doom.TaskController do
   use Doom.Web, :controller
 
   import Doom.Authorize
-  alias Doom.{Task, Group}
+  alias Doom.{Task, Group, Monitor.Job}
 
   def action(conn, _), do: authorize_action conn, ["admin", "user"], __MODULE__
   plug :scrub_params, "task" when action in [:create, :update]
@@ -25,7 +25,10 @@ defmodule Doom.TaskController do
     changeset = Task.changeset(%Task{}, process_task_params(task_params))
     |> Ecto.Changeset.put_assoc(:groups, groups)
     case Repo.insert(changeset) do
-      {:ok, _task} ->
+      {:ok, task} ->
+        task
+        |> Job.add
+
         conn
         |> put_flash(:info, "Task created successfully.")
         |> redirect(to: task_path(conn, :index))
@@ -57,6 +60,9 @@ defmodule Doom.TaskController do
 
     case Repo.update(changeset) do
       {:ok, task} ->
+        task
+        |> Job.fresh
+
         conn
         |> put_flash(:info, "Task updated successfully.")
         |> redirect(to: task_path(conn, :index))
@@ -68,6 +74,7 @@ defmodule Doom.TaskController do
   def delete(conn, %{"id" => id}) do
     task = Repo.get!(Task, id)
     Repo.delete!(task)
+    Job.remove task
 
     conn
     |> put_flash(:info, "Task deleted successfully.")
