@@ -6,11 +6,6 @@ config :doom, Doom.Endpoint,
   http: [port: 4001],
   server: false
 
-# Configures Elixir's Logger
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
-
 # Print only warnings and errors during test
 config :logger, level: :warn
 
