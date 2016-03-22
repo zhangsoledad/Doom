@@ -22,11 +22,12 @@ defmodule Doom.ModelCase do
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
       import Doom.ModelCase
+      import Doom.Factory
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Demo.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Doom.Repo)
   end
 
   @doc """

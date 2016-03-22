@@ -3,7 +3,7 @@ defmodule Doom.GroupTest do
 
   alias Doom.Group
 
-  @valid_attrs %{}
+  @valid_attrs %{name: "test"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

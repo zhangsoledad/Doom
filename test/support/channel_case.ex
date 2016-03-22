@@ -24,6 +24,7 @@ defmodule Doom.ChannelCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
+      import Doom.Factory
 
 
       # The default endpoint for testing
@@ -32,6 +33,6 @@ defmodule Doom.ChannelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Demo.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Doom.Repo)
   end
 end

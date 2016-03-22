@@ -26,6 +26,7 @@ defmodule Doom.ConnCase do
       import Ecto.Query, only: [from: 1, from: 2]
 
       import Doom.Router.Helpers
+      import Doom.Factory
 
       # The default endpoint for testing
       @endpoint Doom.Endpoint
@@ -33,7 +34,7 @@ defmodule Doom.ConnCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Demo.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Doom.Repo)
 
     {:ok, conn: Phoenix.ConnTest.conn()}
   end
