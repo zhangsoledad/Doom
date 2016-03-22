@@ -237,42 +237,47 @@
 </head>
 
 <body>
-
-<table class="body-wrap">
-  <tr>
-    <td></td>
-    <td class="container" width="600">
-      <div class="content">
-        <table class="main" width="100%" cellpadding="0" cellspacing="0">
-          <tr>
-            <td class="content-wrap">
-              <table cellpadding="0" cellspacing="0">
-                <tr>
-                  <td class="content-block">
-                    <h3>Reset password</h3>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="content-block aligncenter">
-                    <a href=<%= reset_link %> class="btn-primary">Reset password</a>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-        <div class="footer">
-          <table width="100%">
+  <table class="body-wrap">
+    <tr>
+      <td></td>
+      <td class="container" width="600">
+        <div class="content">
+          <table class="main" width="100%" cellpadding="0" cellspacing="0">
             <tr>
-              <td class="aligncenter content-block">Build by <a href="https://github.com/zhangsoledad/Doom">Doom</a></td>
+              <td class="content-wrap">
+                <table cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="content-block">
+                      <h3>Your task No.<%= task.id %> send you alert mail</h3>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="content-block">
+                      <p>url:  <%= task.method %>: <%= task.url %></p>
+                      <p>params:  <%= inspect task.params %></p>
+                      <p>headers:  <%= inspect task.headers %></p>
+                      </hr>
+                      <p>expect:  <%= inspect alert.expect %></p>
+                      <p>result:  <%= inspect alert.result %></p>
+                      <p>status:  <%= alert.status_code %></p>
+                      <p>reason:  <%= alert.reason %></p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
             </tr>
           </table>
+          <div class="footer">
+            <table width="100%">
+              <tr>
+                <td class="aligncenter content-block">Build by <a href="https://github.com/zhangsoledad/Doom">Doom</a></td>
+              </tr>
+            </table>
+          </div>
         </div>
-      </div>
-    </td>
-    <td></td>
-  </tr>
-</table>
-
+      </td>
+      <td></td>
+    </tr>
+  </table>
 </body>
 </html>

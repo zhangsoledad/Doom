@@ -56,7 +56,7 @@ defmodule Doom.Monitor.Executor do
                 |> Enum.flat_map(&Repo.all(Ecto.assoc(&1, :users)))
                 |> Enum.map(&(&1.email))
                 |> Enum.uniq
-    Doom.Mailer.send_alert(user_email, "baozha", ["yo", "as"])
+    Doom.Mailer.send_alert(user_email, alert_record, task)
   end
 
 
