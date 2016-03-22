@@ -33,6 +33,7 @@ defmodule Doom.Router do
 
     resources "/groups", GroupController
     resources "/tasks", TaskController
+    resources "/alert_records", AlertRecordController, only: [:index]
   end
 
    scope "/admin", Doom.Admin, as: :admin do

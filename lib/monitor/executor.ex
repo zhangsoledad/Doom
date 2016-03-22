@@ -65,7 +65,7 @@ defmodule Doom.Monitor.Executor do
       {:ok, %HTTPoison.Response{status_code: code, body: body }} ->
         json_body = body |> Poison.decode!
         tbody = json_body |> Map.take(Map.keys(task.expect))
-        process_result( Map.equal?(tbody ,task.expect), code , json_body, task)
+        process_result( Map.equal?(tbody ,task.expect), code , tbody, task)
       {:ok, %HTTPoison.Response{status_code: code}} ->
         process_result(false, code , "No body return", task)
       {:error, %HTTPoison.Error{reason: reason}} ->
