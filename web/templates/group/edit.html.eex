@@ -16,7 +16,7 @@
   <div class="row">
     <div class="col-md-10">
       <%= render Doom.SharedView, "flash.html", assigns %>
-      <%= render Doom.GroupView, "_form.html", changeset: @changeset, action: group_path(@conn, :update, @group) %>
+      <%= render Doom.GroupView, "_form.html", changeset: @changeset, action: group_path(@conn, :update, @group), path: "Edit" %>
     </div>
   </div>
 </section>

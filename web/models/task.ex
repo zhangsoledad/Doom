@@ -17,8 +17,8 @@ defmodule Doom.Task do
     timestamps
   end
 
-  @required_fields ~w(name interval url params expect)
-  @optional_fields ~w(method active type)
+  @required_fields ~w(name interval url params expect method)
+  @optional_fields ~w(active type)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -30,10 +30,5 @@ defmodule Doom.Task do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> cast_assoc(:groups)
-  end
-
-
-  def init do
-
   end
 end

@@ -1,6 +1,6 @@
 <div class="box box-primary">
   <div class="box-header with-border">
-    <h3 class="box-title">New Group</h3>
+    <h3 class="box-title"><%= @path %> Group</h3>
   </div>
   <%= form_for @changeset, @action, fn f -> %>
     <%= if @changeset.action do %>

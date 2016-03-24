@@ -23,5 +23,6 @@ defmodule Doom.AlertRecord do
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> foreign_key_constraint(:task_id)
   end
 end

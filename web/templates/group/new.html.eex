@@ -15,7 +15,7 @@
 <section class="content">
   <div class="row">
     <div class="col-md-10">
-      <%= render Doom.GroupView, "_form.html", changeset: @changeset, action: group_path(@conn, :create)  %>
+      <%= render Doom.GroupView, "_form.html", changeset: @changeset, action: group_path(@conn, :create), path: "New"  %>
     </div>
   </div>
 </section>

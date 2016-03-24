@@ -1,6 +1,6 @@
 <div class="box box-primary">
   <div class="box-header with-border">
-    <h3 class="box-title">New Task</h3>
+    <h3 class="box-title"><%= @path %> Task</h3>
   </div>
     <%= form_for @changeset, @action, fn f -> %>
       <%= if @changeset.action do %>
@@ -66,7 +66,7 @@
           <div class="col-sm-11">
             <label for="group" class="control-label">Group</label></br>
             <%= multiple_select f, :groups, @all_groups,
-                selected: (if @path === "edit", do: Map.get(@changeset.data, :groups), else: []) |>  Enum.map(& "#{&1.id}"),
+                selected: (if @path === "Edit", do: Map.get(@changeset.data, :groups), else: []) |>  Enum.map(& "#{&1.id}"),
                 class: "form-control chosen-select input-sm",
                 data: [placeholder: "Choose Group"],
                 name: "group_ids[]" %>

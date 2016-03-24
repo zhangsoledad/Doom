@@ -15,6 +15,9 @@ defmodule Doom.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  import Openmaize.JWT.Create
+  import Doom.Factory
+
   using do
     quote do
       # Import conveniences for testing with connections
@@ -36,6 +39,14 @@ defmodule Doom.ConnCase do
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Doom.Repo)
 
-    {:ok, conn: Phoenix.ConnTest.conn()}
+    user = create(:user)
+    user_map = %{id: user.id, username: user.username, role: user.role}
+
+    {:ok, user_token} = user_map |> generate_token({0, 7200})
+
+    conn = Phoenix.ConnTest.conn()
+    |> Phoenix.ConnTest.put_req_cookie("access_token", user_token)
+
+    {:ok, conn: conn}
   end
 end

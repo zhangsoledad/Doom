@@ -1,12 +1,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Group
-    <small>All groups</small>
+    Alert
+    <small>Alert History</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i>Home</a></li>
-    <li class="active"><a href="#">Group</a></li>
+    <li class="active"><a href="#">Alert</a></li>
   </ol>
 </section>
 
@@ -16,7 +16,7 @@
     <div class="col-md-12">
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Task</h3>
+          <h3 class="box-title">Alert</h3>
           <div class="box-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
               <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">

@@ -1,5 +1,6 @@
 defmodule Doom.User do
   use Doom.Web, :model
+  @derive {Poison.Encoder, only: [:email, :username, :role, :bio]}
 
   schema "users" do
     field :email, :string
@@ -18,8 +19,8 @@ defmodule Doom.User do
     timestamps
   end
 
-  @required_fields ~w()
-  @optional_fields ~w()
+  @required_fields ~w(email role)
+  @optional_fields ~w(username bio)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -30,7 +31,7 @@ defmodule Doom.User do
 
   def changeset(model, params \\ %{}) do
     model
-    |> cast(params, ~w(email role), ~w(username bio))
+    |> cast(params, @required_fields, @optional_fields)
     |> validate_length(:username, min: 1, max: 30)
     |> unique_constraint(:email)
   end
