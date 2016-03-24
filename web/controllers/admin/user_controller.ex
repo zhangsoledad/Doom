@@ -18,16 +18,20 @@ defmodule Doom.Admin.UserController do
     render conn,"index.html", users: users, all_groups: all_groups, changeset: changeset
   end
 
-  #TODO: edit user
   def edit(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    user = Repo.get!(User, id) |> Repo.preload(:groups)
+    all_groups =  Repo.all from g in Group, select: {g.name, g.id}
     changeset = User.changeset(user)
-    render conn, "edit_user.html", user: user, changeset: changeset
+    render conn, "edit.html", user: user, changeset: changeset, all_groups: all_groups
   end
 
-  def update(conn, %{ "id"=> id } = user_params) do
-    user = Repo.get!(User, id)
-    changeset = User.changeset(user, user_params)
+  def update(conn, %{ "id"=> id, "user" => user_params } = params) do
+    user = Repo.get!(User, id) |> Repo.preload(:groups)
+    group_ids =  params["group_ids"] || []
+    groups = Repo.all(from(g in Group, where: g.id in ^group_ids))
+    groups_changesets = Enum.map(groups, &Ecto.Changeset.change/1)
+
+    changeset = User.changeset(user, user_params) |> Ecto.Changeset.put_assoc(:groups, groups_changesets)
 
     case Repo.update(changeset) do
      {:ok, user} ->
@@ -37,6 +41,12 @@ defmodule Doom.Admin.UserController do
      {:error, changeset} ->
        render(conn, "edit.html", user: user, changeset: changeset)
     end
+  end
+
+  def update(conn, _params) do
+    conn
+    |> put_flash(:error, "Invaild params! need key user")
+    |> redirect(to: admin_user_path(conn, :index))
   end
 
   def create(conn, %{"user" => %{"email" => email} = user_params} = params) do

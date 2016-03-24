@@ -38,6 +38,7 @@
                 <th>Username</th>
                 <th>Role</th>
                 <th>Bio</th>
+                <th>Action</th>
               </tr>
               <%= for user <- @users.entries do %>
                 <tr>
@@ -46,6 +47,11 @@
                   <td><%= user.username %></td>
                   <td><%= user.role %></td>
                   <td><%= user.bio %></td>
+                  <td class="text-right">
+                    <%= link to: admin_user_path(@conn, :edit, user), class: "btn btn-default btn-sm" do %>
+                      <i class="fa fa-folder"></i>  Edit
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>

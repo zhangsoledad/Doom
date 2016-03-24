@@ -20,6 +20,7 @@
                 data: [placeholder: "Choose Group"],
                 name: "group_ids[]" %>
           </div>
+
           <div class="row">
             <div class="col-md-8">
               <div class="checkbox icheck">

@@ -69,7 +69,8 @@
                 selected: (if @path === "Edit", do: Map.get(@changeset.data, :groups), else: []) |>  Enum.map(& "#{&1.id}"),
                 class: "form-control chosen-select input-sm",
                 data: [placeholder: "Choose Group"],
-                name: "group_ids[]" %>
+                name: "group_ids[]",
+                required: true %>
           </div>
         </div>
         </br>
