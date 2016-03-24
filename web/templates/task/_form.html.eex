@@ -2,58 +2,82 @@
   <div class="box-header with-border">
     <h3 class="box-title">New Task</h3>
   </div>
-  <%= form_for @changeset, @action, fn f -> %>
-    <%= if @changeset.action do %>
-      <div class="alert alert-danger">
-        <p>Oops, something went wrong! Please check the errors below.</p>
-      </div>
-    <% end %>
+    <%= form_for @changeset, @action, fn f -> %>
+      <%= if @changeset.action do %>
+        <div class="alert alert-danger">
+          <p>Oops, something went wrong! Please check the errors below.</p>
+        </div>
+      <% end %>
 
-    <div class="box-body">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <%= text_input f, :name, placeholder: "Name", class: "form-control", required: true %>
-      </div>
-      <div class="form-group">
-        <label for="interval">Interval</label>
-        <%= number_input f, :interval, placeholder: "Interval", class: "form-control", min: 1 %>
-      </div>
-      <div class="form-group">
-        <label for="interval">Url</label>
-        <%= url_input f, :url, placeholder: "Url", class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <label for="method">Method</label>
-        <%= select f, :method, ["get","post","put", "patch"], prompt: "Choose request method", required: true, class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <label for="headers">Headers</label>
-        <%= textarea f, :headers, placeholder: "Headers", value: Poison.encode!(field_value(f, :headers)) ,class: "form-control"%>
-      </div>
-      <div class="form-group">
-        <label for="params">Params</label>
-        <%= textarea f, :params, placeholder: "Params", value: Poison.encode!(field_value(f, :params)), class: "form-control"%>
-      </div>
-      <div class="form-group">
-        <label for="expect">Expect</label>
-        <%= textarea f, :expect, placeholder: "Expect",  value: Poison.encode!(field_value(f, :expect)),class: "form-control", required: true %>
-      </div>
-      <div class="form-group">
-        <label for="active">Active</label>&nbsp;
-        <%= checkbox f, :active , class: "minimal-check", checked_value: true, unchecked_value: false %>
+      <div class="box-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="name" class="control-label">Name</label>
+            <%= text_input f, :name, placeholder: "Name", class: "form-control input-sm", required: true %>
+          </div>
+          <div class="col-sm-5">
+            <label for="interval" class="control-label">Interval</label>
+             <%= number_input f, :interval, placeholder: "Interval", class: "form-control input-sm", min: 1 %>
+          </div>
+        </div>
+        </br>
+        <div class="row">
+          <div class="col-sm-9">
+            <label for="interval" class="control-label">Url</label>
+            <%= url_input f, :url, placeholder: "Url", class: "form-control input-sm" %>
+          </div>
+          <div class="col-sm-2">
+            <label for="method">Method</label>
+            <%= select f, :method, ["get","post","put", "patch"], prompt: "method", required: true, class: "form-control input-sm" %>
+          </div>
+        </div>
+        </br>
+        <hr>
+        </br>
+        <div class="row">
+          <div class="col-sm-11">
+            <label for="headers" class="control-label">Headers</label>
+            <%= textarea f, :headers, placeholder: "Headers", value: Poison.encode!(field_value(f, :headers)) ,class: "form-control input-sm"%>
+          </div>
+        </div>
+        </br>
+        <div class="row">
+          <div class="col-sm-11">
+            <label for="params" class="control-label">Params</label>
+            <%= textarea f, :params, placeholder: "Params", value: Poison.encode!(field_value(f, :params)), class: "form-control input-sm"%>
+          </div>
+        </div>
+        </br>
+        <div class="row">
+          <div class="col-sm-11">
+            <label for="expect" class="control-label">Expect</label>
+            <%= textarea f, :expect, placeholder: "Expect",  value: Poison.encode!(field_value(f, :expect)),class: "form-control input-sm", required: true %>
+          </div>
+        </div>
+        </br>
+        <div class="row">
+          <div class="col-sm-11">
+            <label for="active" class="control-label">Active</label>&nbsp;
+            <%= checkbox f, :active , class: "minimal-check", checked_value: true, unchecked_value: false %>
+          </div>
+        </div>
+        </br>
+        <div class="row">
+          <div class="col-sm-11">
+            <label for="group" class="control-label">Group</label></br>
+            <%= multiple_select f, :groups, @all_groups,
+                selected: (if @path === "edit", do: Map.get(@changeset.data, :groups), else: []) |>  Enum.map(& "#{&1.id}"),
+                class: "form-control chosen-select input-sm",
+                data: [placeholder: "Choose Group"],
+                name: "group_ids[]" %>
+          </div>
+        </div>
+        </br>
       </div>
 
-      <div class="form-group">
-        <label for="group">Group</label></br>
-        <%= multiple_select f, :groups, @all_groups,
-            selected: (if @path === "edit", do: Map.get(@changeset.data, :groups), else: []) |>  Enum.map(& "#{&1.id}"),
-            class: "form-control chosen-select",
-            data: [placeholder: "Choose Group"],
-            name: "group_ids[]" %>
+      <div class="box-footer">
+        </br>
+        <%= submit "Submit", class: "btn btn-primary" %>
       </div>
-    </div>
-    <div class="box-footer">
-      <%= submit "Submit", class: "btn btn-primary" %>
-    </div>
-  <% end %>
+      <% end %>
 </div>

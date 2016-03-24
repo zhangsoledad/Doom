@@ -14,9 +14,8 @@
 
 <section class="content">
   <div class="row">
-    <div class="col-md-10">
-
-      <%= render Doom.TaskView, "_form.html", changeset: @changeset, action: task_path(@conn, :create), all_groups: @all_groups, path: "new"   %>
+    <div class="col-md-8">
+      <%= render Doom.TaskView, "_form.html", changeset: @changeset, action: task_path(@conn, :create), all_groups: @all_groups, path: "new" %>
     </div>
   </div>
 </section>
