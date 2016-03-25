@@ -4,6 +4,7 @@ defmodule Doom.Task do
   schema "tasks" do
     field :name, :string
     field :interval, :integer
+    field :silent, :integer
     field :url, :string
     field :method, :string
     field :type, :string

@@ -15,13 +15,31 @@ defmodule Doom.Monitor.Executor do
   end
 
   def process_task(task) do
+    with {:ok, massege} <- validate_task(task),
+         {:ok, massege} <- validate_task_silent(task.silence_at),
+         do:  process_request(task.method, task.url, task.headers, task.params)
+              |> process_json_body(task)
+  end
+
+  defp validate_task(task) do
     case task.active do
       true ->
-        response = process_request(task.method, task.url, task.headers, task.params)
-        |> process_json_body(task)
-         #Logger.debug inspect(response)
+        {:ok, "task is active"}
       _ ->
-        :ok
+        {:ignore, "task is inactive"}
+    end
+  end
+
+  defp validate_task_silent(silence_at) do
+    case silence_at do
+      nil ->
+        {:ok, "task is not silence"}
+      _ ->
+        if Calendar.DateTime.now_utc |> Calendar.DateTime.after?(silence_at) do
+          {:ok, "task is not silence"}
+        else
+          {:ignore, "task is silence"}
+        end
     end
   end
 
@@ -51,6 +69,10 @@ defmodule Doom.Monitor.Executor do
 
   defp send_alert(alert, task) do
     alert_record = AlertRecord.changeset(%AlertRecord{}, alert) |> Repo.insert!
+
+    {:ok, new_silence_at} = Calendar.DateTime.now_utc |> Calendar.DateTime.add(task.silent * 60)
+    Ecto.Changeset.change(task, silence_at: new_silence_at) |> Repo.update
+
     groups = Repo.all(Ecto.assoc(task, :groups))
     user_email = groups
                 |> Enum.flat_map(&Repo.all(Ecto.assoc(&1, :users)))
