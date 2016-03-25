@@ -20,7 +20,7 @@ before_install:
    - cp config/mailer.example.exs config/mailer.exs
 
 before_script:
-  - psql -c "CREATE USER \"doom_test\" WITH SUPERUSER CREATEDB PASSWORD 'doom_test';" -U postgres
+  - psql -c "CREATE USER \"doom\" WITH SUPERUSER CREATEDB PASSWORD 'doom';" -U postgres
   - mix local.hex --force
   - mix local.rebar
   - mix deps.get --only test

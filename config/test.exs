@@ -12,8 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :doom, Doom.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "doom_test",
-  password: "doom_test",
+  username: "doom",
+  password: "doom",
   database: "doom_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

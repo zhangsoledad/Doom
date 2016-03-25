@@ -37,8 +37,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :doom, Doom.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "doom_dev",
-  password: "doom_dev",
+  username: "doom",
+  password: "doom",
   database: "doom_dev",
   hostname: "localhost",
   pool_size: 10

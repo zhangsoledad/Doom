@@ -57,9 +57,14 @@ defmodule Doom.Monitor.Executor do
     |> send_alert(task)
   end
 
-  defp process_result(false, reason, task) when is_binary(reason)  do
+  defp process_result(false, reason, task) when is_binary(reason) do
     %{task_id: task.id, reason: reason, expect: task.expect}
     |> send_alert(task)
+  end
+
+  defp process_result(false, reason, task) when is_atom(reason) do
+    reason_string = reason |> Atom.to_string
+    process_result(false, reason_string, task)
   end
 
   defp process_result(false, task)  do
