@@ -17,7 +17,7 @@
           </div>
           <div class="col-sm-5">
             <label for="interval" class="control-label">Interval</label>
-             <%= number_input f, :interval, placeholder: "Interval", class: "form-control input-sm", min: 1 %>
+             <%= number_input f, :interval, placeholder: "Interval(minutes)", class: "form-control input-sm", min: 1 %>
           </div>
         </div>
         </br>
