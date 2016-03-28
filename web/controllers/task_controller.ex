@@ -1,4 +1,3 @@
-require IEx
 defmodule Doom.TaskController do
   use Doom.Web, :controller
 
@@ -126,25 +125,25 @@ defmodule Doom.TaskController do
     end
   end
 
-  defp process_headers(nil) do
-    %{}
-  end
+  #TODO: re-design
   defp process_headers(headers) when is_binary(headers) do
     Poison.Parser.parse! headers
   end
-
-  defp process_params(nil) do
-    %{}
+  defp process_headers(_) do
+    nil
   end
+
   defp process_params(params) when is_binary(params) do
     Poison.Parser.parse! params
   end
-
-  defp process_expect(nil) do
-    %{}
+  defp process_params(_) do
+    nil
   end
+
   defp process_expect(expect) when is_binary(expect) do
     Poison.Parser.parse! expect
   end
-
+  defp process_expect(_) do
+    nil
+  end
 end
