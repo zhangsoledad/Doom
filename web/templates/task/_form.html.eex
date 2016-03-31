@@ -3,6 +3,7 @@
     <h3 class="box-title"><%= @path %> Task</h3>
   </div>
     <%= form_for @changeset, @action, fn f -> %>
+      <%= hidden_input f, :type, value: "json" %>
       <%= if @changeset.action do %>
         <div class="alert alert-danger">
           <p>Oops, something went wrong! Please check the errors below.</p>
@@ -35,25 +36,112 @@
         <hr>
         </br>
         <div class="row">
-          <div class="col-sm-11">
+          <div class="col-sm-12 json-input" id="json-headers">
             <label for="headers" class="control-label">Headers</label>
-            <%= textarea f, :headers, placeholder: "Headers", value: Poison.encode!(field_value(f, :headers)) ,class: "form-control input-sm"%>
+            <div class="row">
+              <div class="col-sm-4">
+                <%= link "add", to: "javascript:void(0)", class: "json-input-add btn btn-sm btn-link", data: [target: "#json-headers", kname: "task[headers][key][]", vname: "task[headers][value][]"] %>
+              </div>
+            </div>
+            <%= for {key, value} <- (field_value(f, :headers)|| %{}) do %>
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= tag(:input, type: "text", value: key, name: "task[headers][key][]", class: "form-control input-sm") %>
+                </div>
+                <div class="col-sm-4">
+                  <%= tag(:input, type: "text",  value: value, name: "task[headers][value][]", class: "form-control input-sm") %>
+                </div>
+                <div class="col-sm-4">
+                  <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
+                </div>
+              </div>
+            <% end %>
+            <div class="row" id="json-params-init" >
+              <div class="col-sm-4">
+                <%= tag(:input, type: "text", name: "task[headers][key][]", class: "form-control input-sm") %>
+              </div>
+              <div class="col-sm-4">
+                <%= tag(:input, type: "text", name: "task[headers][value][]", class: "form-control input-sm") %>
+              </div>
+              <div class="col-sm-4">
+                <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
+              </div>
+            </div>
           </div>
         </div>
+
         </br>
         <div class="row">
-          <div class="col-sm-11">
+          <div class="col-sm-12 json-input" id="json-params">
             <label for="params" class="control-label">Params</label>
-            <%= textarea f, :params, placeholder: "Params", value: Poison.encode!(field_value(f, :params)), class: "form-control input-sm"%>
+            <div class="row">
+              <div class="col-sm-4">
+                <%= link "add", to: "javascript:void(0)", class: "json-input-add btn btn-sm btn-link", data: [target: "#json-params", kname: "task[params][key][]", vname: "task[params][value][]"] %>
+              </div>
+            </div>
+            <%= for {key, value} <- (field_value(f, :params)|| %{}) do %>
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= tag(:input, type: "text", value: key, name: "task[params][key][]", class: "form-control input-sm") %>
+                </div>
+                <div class="col-sm-4">
+                  <%= tag(:input, type: "text",  value: value, name: "task[params][value][]", class: "form-control input-sm") %>
+                </div>
+                <div class="col-sm-4">
+                  <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
+                </div>
+              </div>
+            <% end %>
+            <div class="row" id="json-params-init" >
+              <div class="col-sm-4">
+                <%= tag(:input, type: "text", name: "task[params][key][]", class: "form-control input-sm") %>
+              </div>
+              <div class="col-sm-4">
+                <%= tag(:input, type: "text", name: "task[params][value][]", class: "form-control input-sm") %>
+              </div>
+              <div class="col-sm-4">
+                <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
+              </div>
+            </div>
           </div>
         </div>
+
         </br>
         <div class="row">
-          <div class="col-sm-11">
+          <div class="col-sm-12 json-input" id="json-expect">
             <label for="expect" class="control-label">Expect</label>
-            <%= textarea f, :expect, placeholder: "Expect",  value: Poison.encode!(field_value(f, :expect)),class: "form-control input-sm", required: true %>
+            <div class="row">
+              <div class="col-sm-4">
+                <%= link "add", to: "javascript:void(0)", class: "json-input-add btn btn-sm btn-link", data: [target: "#json-expect", kname: "task[expect][key][]", vname: "task[expect][value][]"] %>
+              </div>
+            </div>
+            <%= for {key, value} <- (field_value(f, :expect)|| %{}) do %>
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= tag(:input, type: "text", value: key, name: "task[expect][key][]", class: "form-control input-sm") %>
+                </div>
+                <div class="col-sm-4">
+                  <%= tag(:input, type: "text",  value: value, name: "task[expect][value][]", class: "form-control input-sm") %>
+                </div>
+                <div class="col-sm-4">
+                  <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
+                </div>
+              </div>
+            <% end %>
+            <div class="row" id="json-params-init" >
+              <div class="col-sm-4">
+                <%= tag(:input, type: "text", name: "task[expect][key][]", class: "form-control input-sm") %>
+              </div>
+              <div class="col-sm-4">
+                <%= tag(:input, type: "text", name: "task[expect][value][]", class: "form-control input-sm") %>
+              </div>
+              <div class="col-sm-4">
+                <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
+              </div>
+            </div>
           </div>
         </div>
+
         </br>
         <div class="row">
           <div class="col-sm-11">
@@ -62,6 +150,7 @@
           </div>
         </div>
         </br>
+
         <div class="row">
           <div class="col-sm-11">
             <label for="group" class="control-label">Group</label></br>

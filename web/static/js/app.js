@@ -17,7 +17,7 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-//import socket from "./socket"
+import jinput from "./json-field-input"
 
 
 $(function () {
@@ -30,5 +30,18 @@ $(function () {
   $('.chosen-select').chosen({allow_single_deselect: true, width: "50%"});
   $('.scroll').slimScroll({
     height: '800px'
+  });
+
+  $('.json-input').on('click','.json-input-add', function(e){
+    var target = $(e.target);
+    var box = target.attr("data-target");
+    var kname = target.attr("data-kname");
+    var vname = target.attr("vname");
+    $(jinput(kname,vname)).appendTo(box);
+  });
+
+  $('.json-input').on('click','.json-input-remove', function(e){
+    var target = $(e.target).parent().parent();
+    $(target).remove();
   });
 });

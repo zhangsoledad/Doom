@@ -2,7 +2,7 @@ defmodule Doom.DashboardController do
   use Doom.Web, :controller
 
   import Doom.Authorize
-  alias Doom.{Group,Task}
+  alias Doom.Group
 
   def action(conn, _), do: authorize_action conn, ["admin", "user"], __MODULE__
 
@@ -41,7 +41,7 @@ defmodule Doom.DashboardController do
     end
   end
 
-  defp get_tasks(nil, page) do
+  defp get_tasks(nil, _page) do
     nil
   end
 

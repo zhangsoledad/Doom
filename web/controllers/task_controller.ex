@@ -19,17 +19,13 @@ defmodule Doom.TaskController do
     render(conn, "new.html", changeset: changeset, all_groups: all_groups)
   end
 
-  def create(conn, %{"task" => task_params, "group_ids"=> group_ids} = params) do
+  def create(conn, %{"task" => task_params, "group_ids"=> group_ids}) do
     groups = Repo.all(from(g in Group, where: g.id in ^group_ids))
 
-    changeset = case process_task_params(task_params) do
-      {:ok, result} ->
-        Task.changeset(%Task{}, result)
-      {:error, message} ->
-        conn
-        |> put_flash(:error, message)
-        |> redirect(to: task_path(conn, :index))
-    end |> Ecto.Changeset.put_assoc(:groups, groups)
+    processed = process_task_params(task_params)
+
+    changeset = Task.changeset(%Task{}, processed)
+    |> Ecto.Changeset.put_assoc(:groups, groups)
 
     case Repo.insert(changeset) do
       {:ok, task} ->
@@ -63,22 +59,15 @@ defmodule Doom.TaskController do
     render(conn, "edit.html", task: task, changeset: changeset, all_groups: all_groups)
   end
 
-  def update(conn, %{"id" => id, "task" => task_params, "group_ids"=> group_ids} = params) do
+  def update(conn, %{"id" => id, "task" => task_params, "group_ids"=> group_ids}) do
     all_groups =  Repo.all from g in Group, select: {g.name, g.id}
     groups = Repo.all(from(g in Group, where: g.id in ^group_ids))
     groups_changesets = Enum.map(groups, &Ecto.Changeset.change/1)
 
     task = Repo.get!(Task, id) |> Repo.preload(:groups)
 
-    changeset = case process_task_params(task_params) do
-      {:ok, result} ->
-        Task.changeset(task, result)
-      {:error, message} ->
-        conn
-        |> put_flash(:error, message)
-        |> redirect(to: task_path(conn, :index))
-    end |> Ecto.Changeset.put_assoc(:groups, groups_changesets)
-
+    processed = process_task_params(task_params)
+    changeset = Task.changeset(task, processed)
     |> Ecto.Changeset.put_assoc(:groups, groups_changesets)
 
     case Repo.update(changeset) do
@@ -111,40 +100,23 @@ defmodule Doom.TaskController do
   end
 
   defp process_task_params(task_params) do
-    try do
-      jheader = process_headers task_params["headers"]
-      jparams = process_params task_params["params"]
-      jexpect = process_expect task_params["expect"]
-      result =  Map.merge(task_params,
-                %{"headers"=> jheader,
-                "params"=> jparams,
-                "expect"=> jexpect}
-                )
-      {:ok, result}
-    rescue
-      e in Poison.SyntaxError -> {:error, e.message}
-    end
+    new_headers = process_json_field task_params["headers"]
+    new_params = process_json_field task_params["params"]
+    new_expect = process_json_field task_params["expect"]
+    task_params |> Map.merge(%{
+      "headers"=> new_headers,
+      "params"=> new_params,
+      "expect"=> new_expect
+    })
   end
 
-  #TODO: re-design
-  defp process_headers(headers) when is_binary(headers) do
-    Poison.Parser.parse! headers
-  end
-  defp process_headers(_) do
-    nil
+  defp process_json_field(nil) do
+    %{}
   end
 
-  defp process_params(params) when is_binary(params) do
-    Poison.Parser.parse! params
-  end
-  defp process_params(_) do
-    nil
-  end
-
-  defp process_expect(expect) when is_binary(expect) do
-    Poison.Parser.parse! expect
-  end
-  defp process_expect(_) do
-    nil
+  defp process_json_field(field) when is_map(field) do
+    Stream.zip( field["key"], field["value"] )
+    |> Stream.filter( &(elem(&1, 0) != nil) )
+    |> Enum.into(%{})
   end
 end

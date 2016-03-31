@@ -7,7 +7,7 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :doom, Doom.Endpoint,
-  http: [port: 4000],
+  http: [port: 4001],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
@@ -37,8 +37,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :doom, Doom.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "doom",
-  password: "doom",
+  username: "doom_dev",
+  password: "doom_dev",
   database: "doom_dev",
   hostname: "localhost",
   pool_size: 10

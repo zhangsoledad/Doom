@@ -19,7 +19,7 @@ defmodule Doom.Task do
   end
 
   @required_fields ~w(name interval url expect method)
-  @optional_fields ~w(active type params)
+  @optional_fields ~w(active type params headers)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

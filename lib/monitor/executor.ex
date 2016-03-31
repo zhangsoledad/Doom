@@ -2,7 +2,7 @@ defmodule Doom.Monitor.Executor do
   alias Task.Supervisor, as: TaskSup
   require Logger
 
-  alias Doom.{Task, AlertRecord, User}
+  alias Doom.{Task, AlertRecord}
   alias Doom.Repo
 
   def execute(task_id) do
@@ -15,8 +15,8 @@ defmodule Doom.Monitor.Executor do
   end
 
   def process_task(task) do
-    with {:ok, massege} <- validate_task(task),
-         {:ok, massege} <- validate_task_silent(task.silence_at),
+    with {:ok, _massege} <- validate_task(task),
+         {:ok, _massege} <- validate_task_silent(task.silence_at),
          do:  process_request(task.method, task.url, task.headers, task.params)
               |> process_json_body(task)
   end
@@ -43,7 +43,7 @@ defmodule Doom.Monitor.Executor do
     end
   end
 
-  defp process_result(true, code , body, task) when is_map(body) do
+  defp process_result(true, _code , body, _task) when is_map(body) do
     :ok
   end
 
@@ -103,22 +103,34 @@ defmodule Doom.Monitor.Executor do
   end
 
   defp process_request("get", url, headers, params) do
-    HTTPoison.get(url, Map.to_list(headers || %{}), params: params)
+    HTTPoison.get(url, headers, params: params)
   end
 
   defp process_request("post", url, headers, params) do
-    HTTPoison.post(url, params, Map.to_list(headers))
+    HTTPoison.post(url, do_process_body(params), headers)
   end
 
   defp process_request("patch", url, headers, params) do
-    HTTPoison.patch(url, params, Map.to_list(headers))
+    HTTPoison.patch(url, do_process_body(params), headers)
   end
 
   defp process_request("put", url, headers, params) do
-    HTTPoison.put(url, params, Map.to_list(headers))
+    HTTPoison.put(url, params, headers)
   end
 
-  defp process_request("options", url, headers, params) do
-    HTTPoison.options(url, params, Map.to_list(headers))
+  defp process_request("options", url, headers, _params) do
+    HTTPoison.options(url, headers)
+  end
+
+  defp do_process_body(nil) do
+    ""
+  end
+
+  defp do_process_body(%{}) do
+    ""
+  end
+
+  defp do_process_body(body) do
+    Poison.encode! body
   end
 end
