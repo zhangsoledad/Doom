@@ -40,7 +40,8 @@ defmodule Doom.TaskController do
         |> put_flash(:info, "Task created successfully.")
         |> redirect(to: task_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        all_groups =  Repo.all from g in Group, select: {g.name, g.id}
+        render(conn, "new.html", changeset: changeset, all_groups: all_groups)
     end
   end
 

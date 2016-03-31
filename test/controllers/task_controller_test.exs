@@ -32,7 +32,7 @@ defmodule Doom.TaskControllerTest do
     conn = get conn, task_path(conn, :edit, task)
     assert html_response(conn, 200) =~ "Edit Task"
   end
-#
+
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
     task = create(:task)
     group = create(:group)

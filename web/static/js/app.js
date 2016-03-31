@@ -28,4 +28,7 @@ $(function () {
   });
 
   $('.chosen-select').chosen({allow_single_deselect: true, width: "50%"});
+  $('.scroll').slimScroll({
+    height: '800px'
+  });
 });

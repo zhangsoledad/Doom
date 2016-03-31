@@ -5,6 +5,13 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="header">MAIN NAVIGATION</li>
+
+      <%= side_li_tag(@conn , Doom.DashboardView, :index) %>
+        <a href="/">
+          <i class="fa fa-dashboard"></i><span>Dashboard</span>
+        </a>
+      </li>
+
       <%= side_nav_tag(@conn , Doom.TaskView) %>
         <a href="#">
           <i class="fa fa-tasks"></i> <span>Task</span> <i

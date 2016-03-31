@@ -3,9 +3,10 @@ defmodule Doom.Group do
 
   schema "groups" do
     field :name, :string
-
-    many_to_many :users, Doom.User, join_through: "users_groups"
-    many_to_many :tasks, Doom.Task, join_through: "tasks_groups"
+    field :tasks_count, :integer
+    field :users_count, :integer
+    many_to_many :users, Doom.User, join_through: "users_groups", on_delete: :delete_all
+    many_to_many :tasks, Doom.Task, join_through: "tasks_groups", on_delete: :delete_all
 
     timestamps
   end

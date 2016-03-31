@@ -1,0 +1,67 @@
+<div class="col-md-9">
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">Task</h3>
+      <div class="box-tools">
+
+        <div class="input-group input-group-sm" style="width: 150px;">
+          <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body table-responsive">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Interval</th>
+            <th>Url</th>
+            <th>Method</th>
+            <th>Active</th>
+            <th>Action</th>
+          </tr>
+          <%= for task <- @tasks.entries do %>
+            <tr>
+              <td><%= task.id %></td>
+              <td><%= task.name %></td>
+              <td><%= task.interval %></td>
+              <td><%= task.url %></td>
+              <td><%= task.method %></td>
+              <td><%= task.active %></td>
+              <td class="row">
+                <div class="col-md-3">
+                  <%= link "Edit", to: task_path(@conn, :edit, task), class: "btn btn-default btn-xs"%>
+                </div>
+                <div class="col-md-3">
+                  <%= link to: task_path(@conn, :delete, task), class: "btn btn-default btn-xs", method: "delete", data: [confirm: "confirm delete?"] do %>
+                    Delete
+                  <% end %>
+                </div>
+                <div class= "col-md-3">
+                  <a class="btn btn-default btn-xs" role="button" data-toggle="collapse" href=<%= "#taskDetail-#{task.id}" %> aria-expanded="false" aria-controls="taskDetail">
+                   Detail
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <tr class="collapse" id= <%= "taskDetail-#{task.id}" %>>
+              <td colspan="2"><b>headers : </b><%= inspect task.headers %></td>
+              <td colspan="2"><b>params : </b> <%= inspect task.params %></td>
+              <td colspan="3" ><b>expect : </b> <%= inspect task.expect %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer clearfix">
+      <%= pagination(@tasks, &task_path(@conn, :index, &1), @conn.params) %>
+    </div>
+  </div>
+  <!-- /.box -->
+</div>
