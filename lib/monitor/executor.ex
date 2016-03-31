@@ -52,6 +52,11 @@ defmodule Doom.Monitor.Executor do
     |> send_alert(task)
   end
 
+  defp process_result(false, code , body, task) when is_binary(body) do
+    %{task_id: task.id, reason: "not match", status_code: code, expect: task.expect, result: %{result: body}}
+    |> send_alert(task)
+  end
+
   defp process_result(false, code , reason, task) when is_binary(reason)  do
     %{task_id: task.id, reason: reason, status_code: code, expect: task.expect}
     |> send_alert(task)
@@ -90,9 +95,13 @@ defmodule Doom.Monitor.Executor do
   defp process_json_body(body, task) do
     case body do
       {:ok, %HTTPoison.Response{status_code: code, body: body }} ->
-        json_body = body |> Poison.decode!
-        tbody = json_body |> Map.take(Map.keys(task.expect))
-        process_result( Map.equal?(tbody ,task.expect), code , tbody, task)
+        case body |> Poison.decode do
+          {:ok, json_body}->
+            tbody = json_body |> Map.take(Map.keys(task.expect))
+            process_result( Map.equal?(tbody ,task.expect), code , tbody, task)
+          {:error, _}->
+            process_result( false, code , body, task)
+        end
       {:ok, %HTTPoison.Response{status_code: code}} ->
         process_result(false, code , "No body return", task)
       {:error, %HTTPoison.Error{reason: reason}} ->
