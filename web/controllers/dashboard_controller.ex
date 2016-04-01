@@ -42,7 +42,13 @@ defmodule Doom.DashboardController do
   end
 
   defp get_tasks(nil, _page) do
-    nil
+    %Scrivener.Page{
+      page_size: 1,
+      page_number: 1,
+      entries: [],
+      total_entries: 0,
+      total_pages: 1
+    }
   end
 
   defp get_tasks(group, page) do

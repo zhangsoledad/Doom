@@ -60,7 +60,7 @@
     </div>
     <!-- /.box-body -->
     <div class="box-footer clearfix">
-      <%= pagination(@tasks, &task_path(@conn, :index, &1), @conn.params) %>
+      <%= pagination(@tasks, &dashboard_path(@conn, :index, &1), @conn.params) %>
     </div>
   </div>
   <!-- /.box -->
