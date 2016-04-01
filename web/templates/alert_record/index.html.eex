@@ -43,6 +43,7 @@
                   <td><%= alert_record.id %></td>
                   <td><%= inspect alert_record.expect %></td>
                   <td><%= inspect alert_record.result %></td>
+                  <td><%= alert_record.status_code %></td>
                   <td><%= alert_record.reason %></td>
                 </tr>
               <% end %>

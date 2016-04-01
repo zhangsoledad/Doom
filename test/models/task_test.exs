@@ -3,7 +3,7 @@ defmodule Doom.TaskTest do
 
   alias Doom.Task
 
-  @valid_attrs %{expect: %{}, interval: 42, name: "some content", params: %{}, url: "some content" ,method: "get"}
+  @valid_attrs %{"expect"=> "{\"show\":1}", "interval"=> 42, "name"=> "some content", "params"=> nil, "url" => "some content" ,"method"=> "get"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

@@ -108,40 +108,11 @@
 
         </br>
         <div class="row">
-          <div class="col-sm-12 json-input" id="json-expect">
+          <div class="col-sm-11">
             <label for="expect" class="control-label">Expect</label>
-            <div class="row">
-              <div class="col-sm-4">
-                <%= link "add", to: "javascript:void(0)", class: "json-input-add btn btn-sm btn-link", data: [target: "#json-expect", kname: "task[expect][key][]", vname: "task[expect][value][]"] %>
-              </div>
-            </div>
-            <%= for {key, value} <- (field_value(f, :expect)|| %{}) do %>
-              <div class="row">
-                <div class="col-sm-4">
-                  <%= tag(:input, type: "text", value: key, name: "task[expect][key][]", class: "form-control input-sm") %>
-                </div>
-                <div class="col-sm-4">
-                  <%= tag(:input, type: "text",  value: value, name: "task[expect][value][]", class: "form-control input-sm") %>
-                </div>
-                <div class="col-sm-4">
-                  <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
-                </div>
-              </div>
-            <% end %>
-            <div class="row" id="json-params-init" >
-              <div class="col-sm-4">
-                <%= tag(:input, type: "text", name: "task[expect][key][]", class: "form-control input-sm") %>
-              </div>
-              <div class="col-sm-4">
-                <%= tag(:input, type: "text", name: "task[expect][value][]", class: "form-control input-sm") %>
-              </div>
-              <div class="col-sm-4">
-                <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
-              </div>
-            </div>
+            <%= textarea f, :expect, placeholder: "Expect",  value: Poison.encode!(field_value(f, :expect)),class: "form-control input-sm", required: true %>
           </div>
         </div>
-
         </br>
         <div class="row">
           <div class="col-sm-11">
