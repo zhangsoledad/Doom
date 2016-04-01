@@ -2,7 +2,7 @@ defmodule Doom.TaskControllerTest do
   use Doom.ConnCase
 
   alias Doom.Task
-  @valid_attrs %{expect: "{}", interval: 42, name: "some content", params: "{}", url: "some content" ,method: "get"}
+  @valid_attrs %{expect: %{"key"=> ["test"], "value"=> ["aa"]}, interval: 42, name: "some content", params: nil, url: "some content" ,method: "get"}
   @invalid_attrs %{}
 
   test "lists all entries on index", %{conn: conn} do

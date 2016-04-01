@@ -10,6 +10,7 @@ defmodule Doom.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases,
+     test_coverage: [tool: ExCoveralls],
      deps: deps]
   end
 
@@ -54,10 +55,13 @@ defmodule Doom.Mixfile do
      {:httpoison, "~> 0.8.1"},
      {:not_qwerty123, "~> 1.1"},
      {:floki, "~> 0.8"},
+     {:dialyze, "~> 0.2.0", only: :dev},
      {:openmaize, github: "zhangsoledad/openmaize"},
      {:scrivener, github: "zhangsoledad/scrivener"},
      {:mailman, github: "zhangsoledad/mailman"},
      {:ex_machina, "~> 0.6.1", only: :test},
+     {:excoveralls, "~> 0.5", only: :test},
+     {:inch_ex, only: [:dev, :test]},
      {:credo, "~> 0.3", only: [:dev, :test]}]
   end
 
