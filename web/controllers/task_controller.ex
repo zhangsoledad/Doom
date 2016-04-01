@@ -22,7 +22,7 @@ defmodule Doom.TaskController do
   def create(conn, %{"task" => task_params, "group_ids"=> group_ids}) do
     groups = Repo.all(from(g in Group, where: g.id in ^group_ids))
 
-    changeset = Task.changeset(%Task{}, task_params)
+    changeset = Task.save_changeset(%Task{}, task_params)
     |> Ecto.Changeset.put_assoc(:groups, groups)
 
     case Repo.insert(changeset) do
@@ -63,7 +63,7 @@ defmodule Doom.TaskController do
 
     task = Repo.get!(Task, id) |> Repo.preload(:groups)
 
-    changeset = Task.changeset(task, task_params)
+    changeset = Task.save_changeset(task, task_params)
     |> Ecto.Changeset.put_assoc(:groups, groups_changesets)
 
     case Repo.update(changeset) do

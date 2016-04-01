@@ -28,11 +28,14 @@ defmodule Doom.Task do
   with no validation performed.
   """
   def changeset(model, params \\ %{}) do
-
-    task_params = params |> process_task_params
     model
-    |> cast(task_params, @required_fields, @optional_fields)
+    |> cast(params, @required_fields, @optional_fields)
     |> cast_assoc(:groups)
+  end
+
+  def save_changeset(model, params \\ %{}) do
+    task_params = params |> process_task_params
+    model |> changeset(task_params)
   end
 
   defp process_task_params(params) do
@@ -62,6 +65,10 @@ defmodule Doom.Task do
       {:error, _}->
         expect
     end
+  end
+
+  defp process_expect(expect) when is_map(expect) do
+    expect
   end
 
   defp process_expect(_) do

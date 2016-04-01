@@ -40,10 +40,17 @@
                 <tr>
                   <td><%= group.id %></td>
                   <td><%= group.name %></td>
-                  <td class="text-right">
-                    <%= link to: group_path(@conn, :edit, group), class: "btn btn-default btn-sm" do %>
-                      <i class="fa fa-folder"></i>  Edit
-                    <% end %>
+                  <td class="col-md-3">
+                    <div class="col-md-2">
+                      <%= link to: group_path(@conn, :edit, group), class: "btn btn-default btn-sm" do %>
+                        <i class="fa fa-folder"></i>  Edit
+                      <% end %>
+                    </div>
+                    <div class="col-md-2">
+                      <%= link to: group_path(@conn, :delete, group), class: "btn btn-default btn-sm", method: "delete", data: [confirm: "confirm delete?"] do %>
+                        <i class="fa fa-remove"></i> Delete
+                      <% end %>
+                    </div>
                   </td>
                 </tr>
               <% end %>

@@ -3,7 +3,10 @@ defmodule Doom.Mailer do
 
   @from Application.get_env(:doom, :mailer)[:username]
 
-  # send_alert(["787953403@qq.com"], alert, task)
+  def send_alert([], alert, task) do
+    :ok
+  end
+
   def send_alert(to, alert, task) do
     html = Templates.alert_html(alert, task)
     %Mailman.Email{
