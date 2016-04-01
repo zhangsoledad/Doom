@@ -2,6 +2,7 @@
 A api monitor system build by [phoenix](http://www.phoenixframework.org/)
 
 [![Build Status](https://travis-ci.org/zhangsoledad/Doom.svg?branch=master)](https://travis-ci.org/zhangsoledad/Doom)
+[![Coverage Status](https://coveralls.io/repos/github/zhangsoledad/Doom/badge.svg?branch=master)](https://coveralls.io/github/zhangsoledad/Doom?branch=master)
 
 ## Requirements
 
