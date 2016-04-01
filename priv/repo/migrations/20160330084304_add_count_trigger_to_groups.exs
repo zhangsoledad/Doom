@@ -2,9 +2,8 @@ defmodule Doom.Repo.Migrations.AddCountTriggerToGroups do
   use Ecto.Migration
 
   def up do
-    File.cwd
-    |> elem(1)
-    |> Path.join("priv/repo/sql/group_count_trigger.sql")
+    __DIR__
+    |> Path.join("../sql/group_count_trigger.sql")
     |> Path.expand
     |> File.read
     |> elem(1)
