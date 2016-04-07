@@ -1,6 +1,5 @@
 defmodule Doom.Monitor.Executor do
   alias Task.Supervisor, as: TaskSup
-  require Logger
 
   alias Doom.{Task, AlertRecord}
   alias Doom.Repo
@@ -78,10 +77,12 @@ defmodule Doom.Monitor.Executor do
   end
 
   defp send_alert(alert, task) do
-    alert_record = AlertRecord.changeset(%AlertRecord{}, alert) |> Repo.insert!
-
     {:ok, new_silence_at} = Calendar.DateTime.now_utc |> Calendar.DateTime.add(task.silent * 60)
-    Ecto.Changeset.change(task, silence_at: new_silence_at) |> Repo.update
+
+    {:ok, alert_record } = Repo.transaction fn ->
+      Ecto.Changeset.change(task, silence_at: new_silence_at) |> Repo.update!
+      AlertRecord.changeset(%AlertRecord{}, alert) |> Repo.insert!
+    end
 
     groups = Repo.all(Ecto.assoc(task, :groups))
     user_email = groups
@@ -95,11 +96,13 @@ defmodule Doom.Monitor.Executor do
   defp process_json_body(body, task) do
     case body do
       {:ok, %HTTPoison.Response{status_code: code, body: body }} ->
-        case body |> Poison.decode do
-          {:ok, json_body}->
+        case (body |> Poison.decode) do
+          {:ok, json_body } when is_map(json_body) ->
             tbody = json_body |> Map.take(Map.keys(task.expect))
             process_result( Map.equal?(tbody ,task.expect), code , tbody, task)
-          {:error, _}->
+          {:ok, _ } ->
+             process_result( false, code , body, task)
+          {:error, _ } ->
             process_result( false, code , body, task)
         end
       {:ok, %HTTPoison.Response{status_code: code}} ->

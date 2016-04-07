@@ -21,6 +21,12 @@ defmodule Doom.ViewHelpers do
     end
   end
 
+  def avatar_url(user_name) do
+    name = Pinyin.from_string(user_name, splitter: "")
+    filename = AlchemicAvatar.generate(name, 150)
+    filename |> String.replace("priv/static", "")
+  end
+
   def pagination(paginator, path_fun, params) do
     current_page = paginator.page_number
     total_pages = paginator.total_pages

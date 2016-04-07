@@ -19,13 +19,13 @@
         <!-- User dropdown -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="<%= static_path(@conn, "/images/avatar.png") %>" class="user-image" alt="User Image">
+            <img src="<%= static_path(@conn, avatar_url(@current_user.username)) %>" class="user-image" alt="User Image">
             <span class="hidden-xs"><%= @current_user.username %></span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
-              <img src="<%= static_path(@conn, "/images/avatar.png") %>" class="img-circle" alt="User Image">
+              <img src="<%= static_path(@conn, avatar_url(@current_user.username)) %>" class="img-circle" alt="User Image">
               <p>
                 <%= @current_user.email %> - <%= @current_user.role %>
                 <small><%= @current_user.bio %></small>

@@ -17,6 +17,7 @@ sudo apt-get install -y\
              libpq-dev\
              build-essential\
              libwxgtk3.0-dev\
+             imagemagick \
              postgresql-9.5\
              nodejs\
 

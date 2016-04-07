@@ -29,7 +29,8 @@ defmodule Doom.Mixfile do
   defp applications(_) do
     [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
      :phoenix_ecto, :postgrex, :quantum, :httpoison, :not_qwerty123, :openmaize,
-     :calendar, :calecto, :phoenix_calendar, :scrivener, :floki, :mailman]
+     :calendar, :calecto, :phoenix_calendar, :scrivener, :floki, :mailman,
+     :alchemic_avatar, :alchemic_pinyin]
   end
 
   # Specifies which paths to compile per environment.
@@ -56,12 +57,14 @@ defmodule Doom.Mixfile do
      {:not_qwerty123, "~> 1.1"},
      {:floki, "~> 0.8"},
      {:dialyze, "~> 0.2.0", only: :dev},
+     {:alchemic_pinyin, "~> 0.1.0"},
+     {:alchemic_avatar, "~> 0.1.0"},
      {:openmaize, github: "zhangsoledad/openmaize"},
      {:scrivener, github: "zhangsoledad/scrivener"},
      {:mailman, github: "zhangsoledad/mailman"},
      {:ex_machina, "~> 0.6.1", only: :test},
      {:excoveralls, "~> 0.5", only: :test},
-     {:inch_ex, only: [:dev, :test]},
+     {:inch_ex, ">= 0.0.0", only: [:dev, :test]},
      {:credo, "~> 0.3", only: [:dev, :test]}]
   end
 

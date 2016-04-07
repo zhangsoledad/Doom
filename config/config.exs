@@ -29,5 +29,9 @@ config :openmaize,
   repo: Doom.Repo,
   password_strength: [min_length: 6, extra_chars: false]
 
+config :alchemic_avatar,
+  cache_base_path: "priv/static/images",
+  annotate_position: "+0+0"
+
 import_config "#{Mix.env}.exs"
 import_config "mailer.exs"

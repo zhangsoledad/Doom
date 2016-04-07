@@ -1,6 +1,6 @@
 <div class="user-panel">
   <div class="pull-left image">
-    <img src="<%= static_path(@conn, "/images/avatar.png") %>" class="img-circle" alt="User Image">
+    <img src="<%= static_path(@conn, avatar_url(@current_user.username)) %>" class="img-circle" alt="User Image">
   </div>
   <div class="pull-left info">
     <p><%= @current_user.username %></p>
