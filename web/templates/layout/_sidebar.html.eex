@@ -6,47 +6,29 @@
     <ul class="sidebar-menu">
       <li class="header">MAIN NAVIGATION</li>
 
-      <%= side_li_tag(@conn , Doom.DashboardView, :index) %>
+      <%= side_li_tag(@conn , [Doom.DashboardView, Doom.TaskView]) %>
         <a href="/">
           <i class="fa fa-dashboard"></i><span>Dashboard</span>
         </a>
       </li>
-
-      <%= side_nav_tag(@conn , Doom.TaskView) %>
-        <a href="#">
-          <i class="fa fa-tasks"></i> <span>Task</span> <i
-          class="fa fa-angle-left pull-right"></i>
+      <%= side_li_tag(@conn , [Doom.GroupView]) %>
+        <a href="/groups">
+          <i class="fa fa-users"></i> <span>Group</span>
         </a>
-        <ul class="treeview-menu">
-          <%= side_li_tag(@conn , Doom.TaskView, :index) %><a href="/tasks"><i class="fa fa-circle-o"></i>list</a></li>
-          <%= side_li_tag(@conn , Doom.TaskView, :new) %><a href="/tasks/new"><i class="fa fa-circle-o"></i>new</a></li>
-        </ul>
       </li>
 
-      <%= side_nav_tag(@conn , Doom.GroupView) %>
-        <a href="#">
-          <i class="fa fa-users"></i> <span>Group</span> <i
-          class="fa fa-angle-left pull-right"></i>
+      <%= side_li_tag(@conn , [Doom.AlertRecordView]) %>
+        <a href="/alert_records">
+          <i class="fa fa-users"></i> <span>AlertRecord</span>
         </a>
-        <ul class="treeview-menu">
-          <%= side_li_tag(@conn , Doom.GroupView, :index) %><a href="/groups"><i class="fa fa-circle-o"></i>list</a></li>
-          <%= side_li_tag(@conn , Doom.GroupView, :new) %><a href="/groups/new"><i class="fa fa-circle-o"></i>new</a></li>
-        </ul>
-      </li>
-
-      <%= side_nav_tag(@conn , Doom.AlertRecordView) %>
-        <a href="#">
-          <i class="fa fa-users"></i> <span>AlertRecord</span> <i
-          class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <%= side_li_tag(@conn , Doom.AlertRecordView, :index) %><a href="/alert_records"><i class="fa fa-circle-o"></i>list</a></li>
-        </ul>
       </li>
 
       <%= if @current_user.role == "admin" do %>
         <li class="header">Admin</li>
-        <%= side_li_tag(@conn , Doom.Admin.UserView, :index) %><a href="<%= admin_user_path(@conn, :index) %>"><i class="fa fa-circle-o text-red"></i> <span>User</span></a></li>
+        <%= side_li_tag(@conn , [Doom.Admin.UserView]) %>
+          <a href="<%= admin_user_path(@conn, :index) %>">
+          <i class="fa fa-circle-o text-red"></i> <span>User</span></a>
+        </li>
       <% end %>
     </ul>
   </section>

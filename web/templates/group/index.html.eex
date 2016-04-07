@@ -18,9 +18,9 @@
         <div class="box-header with-border">
           <h3 class="box-title">Group</h3>
           <div class="box-tools">
+            <a href= <%= group_path(@conn, :new)%> class="btn btn-default btn-sm pull-right">New</a>
             <div class="input-group input-group-sm" style="width: 150px;">
               <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
               <div class="input-group-btn">
                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
               </div>
@@ -28,29 +28,25 @@
           </div>
         </div>
         <!-- /.box-header -->
-        <div class="box-body">
+        <div class="box-body table-responsive">
           <table class="table table-bordered">
             <tbody>
               <tr>
                 <th style="width: 10px">#</th>
                 <th>Name</th>
-                <th>Action</th>
+                <th style="width: 150px">Action</th>
               </tr>
               <%= for group <- @groups.entries do %>
                 <tr>
                   <td><%= group.id %></td>
                   <td><%= group.name %></td>
-                  <td class="col-md-3">
-                    <div class="col-md-2">
-                      <%= link to: group_path(@conn, :edit, group), class: "btn btn-default btn-sm" do %>
-                        <i class="fa fa-folder"></i>  Edit
-                      <% end %>
-                    </div>
-                    <div class="col-md-2">
-                      <%= link to: group_path(@conn, :delete, group), class: "btn btn-default btn-sm", method: "delete", data: [confirm: "confirm delete?"] do %>
-                        <i class="fa fa-remove"></i> Delete
-                      <% end %>
-                    </div>
+                  <td class="text-right">
+                    <%= link to: group_path(@conn, :edit, group), class: "btn btn-default btn-xs" do %>
+                      <i class="fa fa-folder"></i>  Edit
+                    <% end %>
+                    <%= link to: group_path(@conn, :delete, group), class: "btn btn-default btn-xs", method: "delete", data: [confirm: "confirm delete?"] do %>
+                      <i class="fa fa-remove"></i> Delete
+                    <% end %>
                   </td>
                 </tr>
               <% end %>

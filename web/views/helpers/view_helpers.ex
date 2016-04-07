@@ -1,19 +1,9 @@
 defmodule Doom.ViewHelpers do
   use Phoenix.HTML
 
-  def side_nav_tag(conn, view) do
+  def side_li_tag(conn, views) when is_list(views) do
     info = conn.private
-    case info[:phoenix_view] == view do
-      true ->
-        tag(:li, class: "treeview active")
-      _ ->
-        tag(:li, class: "treeview")
-    end
-  end
-
-  def side_li_tag(conn, view, action) do
-    info = conn.private
-    case (info[:phoenix_view] == view) && (info[:phoenix_action] == action) do
+    case (info[:phoenix_view] in views) do
       true ->
         tag(:li, class: "active")
       _ ->
