@@ -30,10 +30,12 @@ defmodule Doom.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
 
+  # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
     key: "_doom_key",
-    signing_salt: "f4UxFbPu"
+    signing_salt: "f4UxFbPu",
+    encryption_salt: ""
 
   plug Doom.Router
 end
