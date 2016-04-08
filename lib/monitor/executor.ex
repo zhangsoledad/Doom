@@ -15,9 +15,23 @@ defmodule Doom.Monitor.Executor do
 
   def process_task(task) do
     with {:ok, _massege} <- validate_task(task),
-         {:ok, _massege} <- validate_task_silent(task.silence_at),
-         do:  process_request(task.method, task.url, task.headers, task.params)
-              |> process_json_body(task)
+         {:ok, _massege} <- validate_task_silent(task.silence_at) do
+      case (task |> process_request) do
+        {:ok, %HTTPoison.Response{status_code: code, body: body }} ->
+          case analyze_body(body, task) do
+            {:ok, _massege} ->
+              :ok
+            {:error, reason, result}->
+              do_alert(task, reason, code, result)
+          end
+        {:ok, %HTTPoison.Response{status_code: code}} ->
+          do_alert(task, "no body return", code , nil)
+        {:error, %HTTPoison.Error{reason: reason}} ->
+          do_alert(task, reason, nil , nil)
+        _ ->
+          do_alert(task, "unkown", nil , nil)
+      end
+    end
   end
 
   defp validate_task(task) do
@@ -42,44 +56,20 @@ defmodule Doom.Monitor.Executor do
     end
   end
 
-  defp process_result(true, _code , body, _task) when is_map(body) do
-    :ok
-  end
-
-  defp process_result(false, code , body, task) when is_map(body) do
-    %{task_id: task.id, reason: "not match", status_code: code, expect: task.expect, result: body}
+  def do_alert(task, reason, code, result) when is_binary(reason) do
+    %{task_id: task.id, reason: reason, status_code: code, expect: task.expect, result: result}
     |> send_alert(task)
   end
 
-  defp process_result(false, code , body, task) when is_binary(body) do
-    %{task_id: task.id, reason: "not match", status_code: code, expect: task.expect, result: %{result: body}}
-    |> send_alert(task)
-  end
-
-  defp process_result(false, code , reason, task) when is_binary(reason)  do
-    %{task_id: task.id, reason: reason, status_code: code, expect: task.expect}
-    |> send_alert(task)
-  end
-
-  defp process_result(false, reason, task) when is_binary(reason) do
-    %{task_id: task.id, reason: reason, expect: task.expect}
-    |> send_alert(task)
-  end
-
-  defp process_result(false, reason, task) when is_atom(reason) do
+  def do_alert(task, reason, code , result) when is_atom(reason) do
     reason_string = reason |> Atom.to_string
-    process_result(false, reason_string, task)
-  end
-
-  defp process_result(false, task)  do
-    %{task_id: task.id, reason: "unknown", expect: task.expect}
-    |> send_alert(task)
+    do_alert(task, reason_string, code , result)
   end
 
   defp send_alert(alert, task) do
     {:ok, new_silence_at} = Calendar.DateTime.now_utc |> Calendar.DateTime.add(task.silent * 60)
 
-    {:ok, alert_record } = Repo.transaction fn ->
+    {:ok, alert_record} = Repo.transaction fn ->
       Ecto.Changeset.change(task, silence_at: new_silence_at) |> Repo.update!
       AlertRecord.changeset(%AlertRecord{}, alert) |> Repo.insert!
     end
@@ -92,57 +82,65 @@ defmodule Doom.Monitor.Executor do
     Doom.Mailer.send_alert(user_email, alert_record, task)
   end
 
-
-  defp process_json_body(body, task) do
-    case body do
-      {:ok, %HTTPoison.Response{status_code: code, body: body }} ->
-        case (body |> Poison.decode) do
-          {:ok, json_body } when is_map(json_body) ->
-            tbody = json_body |> Map.take(Map.keys(task.expect))
-            process_result( Map.equal?(tbody ,task.expect), code , tbody, task)
-          {:ok, _ } ->
-             process_result( false, code , body, task)
-          {:error, _ } ->
-            process_result( false, code , body, task)
+  defp analyze_body(body, %Task{type: "json", expect: expect}) do
+    case (body |> Poison.decode) do
+      {:ok, json} when is_map(json) ->
+        keys = Map.keys(expect)
+        result = json |> Map.take(keys)
+        case Map.equal?(result ,expect) do
+          true -> {:ok, :match}
+          false -> {:error, "not match", result}
         end
-      {:ok, %HTTPoison.Response{status_code: code}} ->
-        process_result(false, code , "No body return", task)
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        process_result(false, reason, task)
-      _ ->
-       process_result(false, task)
+      {:ok, body } ->
+        {:error, "invaild json body", body }
+      {:error, _ } ->
+        {:error, "invaild json body", nil }
     end
   end
 
-  defp process_request("get", url, headers, params) do
+  defp analyze_body(body, %Task{type: "html", expect: expect}) do
+    result =  expect
+    |> Enum.map(fn {k, _} -> { k, Floki.find(body, k) |> Floki.raw_html } end)
+    |> Enum.into(%{})
+    case Map.equal?(result ,expect) do
+      true -> {:ok, :match}
+      false -> {:error, "not match", result}
+    end
+  end
+
+  defp analyze_body(_body, _task) do
+    {:error, "invaild task type", nil }
+  end
+
+  defp process_request(%Task{ method: "get", url: url, headers: headers, params: params}) do
     HTTPoison.get(url, headers, params: params)
   end
 
-  defp process_request("post", url, headers, params) do
-    HTTPoison.post(url, do_process_body(params), headers)
+  defp process_request(%Task{ method: "post", url: url, headers: headers, params: params}) do
+    HTTPoison.post(url, do_request_body(params), headers)
   end
 
-  defp process_request("patch", url, headers, params) do
-    HTTPoison.patch(url, do_process_body(params), headers)
+  defp process_request(%Task{ method: "patch", url: url, headers: headers, params: params}) do
+    HTTPoison.patch(url, do_request_body(params), headers)
   end
 
-  defp process_request("put", url, headers, params) do
+  defp process_request(%Task{ method: "put", url: url, headers: headers, params: params}) do
     HTTPoison.put(url, params, headers)
   end
 
-  defp process_request("options", url, headers, _params) do
+  defp process_request(%Task{ method: "options", url: url, headers: headers}) do
     HTTPoison.options(url, headers)
   end
 
-  defp do_process_body(nil) do
+  defp do_request_body(nil) do
     ""
   end
 
-  defp do_process_body(%{}) do
+  defp do_request_body(%{}) do
     ""
   end
 
-  defp do_process_body(body) do
+  defp do_request_body(body) do
     Poison.encode! body
   end
 end

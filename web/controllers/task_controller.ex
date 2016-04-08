@@ -32,7 +32,7 @@ defmodule Doom.TaskController do
 
         conn
         |> put_flash(:info, "Task created successfully.")
-        |> redirect(to: task_path(conn, :index))
+        |> redirect(to: dashboard_path(conn, :index))
       {:error, changeset} ->
         all_groups =  Repo.all from g in Group, select: {g.name, g.id}
         render(conn, "new.html", changeset: changeset, all_groups: all_groups)
@@ -73,7 +73,7 @@ defmodule Doom.TaskController do
 
         conn
         |> put_flash(:info, "Task updated successfully.")
-        |> redirect(to: task_path(conn, :index))
+        |> redirect(to: dashboard_path(conn, :index))
       {:error, changeset} ->
         all_groups =  Repo.all from g in Group, select: {g.name, g.id}
         render(conn, "edit.html", task: task, changeset: changeset, all_groups: all_groups)
