@@ -33,7 +33,7 @@
               <td><%= task.url %></td>
               <td><%= task.method %></td>
               <td><%= task.active %></td>
-              <td class="text-right">
+              <td class="text-right col-sm-5">
                 <%= link to: task_path(@conn, :delete, task), class: "btn btn-default btn-xs", method: "delete", data: [confirm: "confirm delete?"] do %>
                   Delete
                 <% end %>

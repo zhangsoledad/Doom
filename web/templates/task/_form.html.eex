@@ -3,7 +3,6 @@
     <h3 class="box-title"><%= @path %> Task</h3>
   </div>
     <%= form_for @changeset, @action, fn f -> %>
-      <%= hidden_input f, :type, value: "json" %>
       <%= if @changeset.action do %>
         <div class="alert alert-danger">
           <p>Oops, something went wrong! Please check the errors below.</p>
@@ -103,6 +102,14 @@
                 <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
               </div>
             </div>
+          </div>
+        </div>
+
+        </br>
+        <div class="row">
+          <div class="col-sm-5">
+            <label for="type" class="control-label">Type</label>
+            <%= select f, :type,  ["json": "json", "html": "html"], class: "form-control input-sm" %>
           </div>
         </div>
 
