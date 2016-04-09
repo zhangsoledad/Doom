@@ -14,7 +14,7 @@ defmodule Doom.ViewHelpers do
   def avatar_url(user_name) do
     name = Pinyin.from_string(user_name, splitter: "")
     filename = AlchemicAvatar.generate(name, 150)
-    filename |> String.replace("priv/static", "")
+    filename |> String.split("priv/static", parts: 2) |> List.last
   end
 
   def pagination(paginator, path_fun, params) do

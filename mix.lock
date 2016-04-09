@@ -7,7 +7,7 @@
   "certifi": {:hex, :certifi, "0.4.0"},
   "cf": {:hex, :cf, "0.2.1"},
   "combine": {:hex, :combine, "0.7.0"},
-  "comeonin": {:hex, :comeonin, "2.3.1"},
+  "comeonin": {:hex, :comeonin, "2.4.0"},
   "connection": {:hex, :connection, "1.0.2"},
   "cowboy": {:hex, :cowboy, "1.0.4"},
   "cowlib": {:hex, :cowlib, "1.0.2"},

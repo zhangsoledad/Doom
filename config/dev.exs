@@ -34,6 +34,10 @@ config :logger, :console,
 # and calculating stacktraces is usually expensive.
 config :phoenix, :stacktrace_depth, 20
 
+config :alchemic_avatar,
+  cache_base_path: "priv/static/images",
+  annotate_position: "+0+0"
+
 # Configure your database
 config :doom, Doom.Repo,
   adapter: Ecto.Adapters.Postgres,
