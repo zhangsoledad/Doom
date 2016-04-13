@@ -76,8 +76,8 @@ defmodule Doom.Monitor.Executor do
 
     groups = Repo.all(Ecto.assoc(task, :groups))
     user_email = groups
-                |> Enum.flat_map(&Repo.all(Ecto.assoc(&1, :users)))
-                |> Enum.map(&(&1.email))
+                |> Stream.flat_map(&Repo.all(Ecto.assoc(&1, :users)))
+                |> Stream.map(&(&1.email))
                 |> Enum.uniq
     Doom.Mailer.send_alert(user_email, alert_record, task)
   end
@@ -99,10 +99,14 @@ defmodule Doom.Monitor.Executor do
   end
 
   defp analyze_body(body, %Task{type: "html", expect: expect}) do
-    result =  expect
-    |> Enum.map(fn {k, _} -> { k, Floki.find(body, k) |> Floki.raw_html } end)
+    result = expect
+    |> Stream.map(fn {k, _} -> { k, r = Floki.find(body, k) |> Floki.raw_html} end)
     |> Enum.into(%{})
-    case Map.equal?(result ,expect) do
+
+    match = result
+    |> Enum.all?(fn {k, v} -> v =~ Map.get(expect, k) end)
+
+    case match do
       true -> {:ok, :match}
       false -> {:error, "not match", result}
     end
