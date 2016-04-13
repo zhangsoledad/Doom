@@ -34,8 +34,7 @@ defmodule Doom.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_doom_key",
-    signing_salt: "f4UxFbPu",
-    encryption_salt: ""
+    signing_salt: "f4UxFbPu"
 
   plug Doom.Router
 end
