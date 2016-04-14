@@ -39,13 +39,18 @@ defmodule Doom.ConnCase do
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Doom.Repo)
 
-    user = create(:user)
-    user_map = %{id: user.id, username: user.username, role: user.role}
-
-    {:ok, user_token} = user_map |> generate_token({0, 7200})
-
     conn = Phoenix.ConnTest.conn()
-    |> Phoenix.ConnTest.put_req_cookie("access_token", user_token)
+
+    login = Map.get(tags, :login, true)
+
+    if login do
+      user = create(:user)
+      user_map = %{id: user.id, username: user.username, role: user.role}
+
+      {:ok, user_token} = user_map |> generate_token({0, 7200})
+
+      conn = conn |> Phoenix.ConnTest.put_req_cookie("access_token", user_token)
+    end
 
     {:ok, conn: conn}
   end

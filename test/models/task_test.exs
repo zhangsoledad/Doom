@@ -1,5 +1,5 @@
 defmodule Doom.TaskTest do
-  use Doom.ModelCase
+  use Doom.ModelCase, async: true
 
   alias Doom.Task
 

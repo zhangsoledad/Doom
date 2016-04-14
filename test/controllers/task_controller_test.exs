@@ -1,5 +1,5 @@
 defmodule Doom.TaskControllerTest do
-  use Doom.ConnCase
+  use Doom.ConnCase, async: true
 
   alias Doom.Task
   @valid_attrs %{expect: "{\"show\":1}", interval: 42, name: "some content", params: nil, url: "some content" ,method: "get"}

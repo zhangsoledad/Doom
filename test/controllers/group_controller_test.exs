@@ -1,5 +1,5 @@
 defmodule Doom.GroupControllerTest do
-  use Doom.ConnCase
+  use Doom.ConnCase, async: true
 
   alias Doom.Group
 

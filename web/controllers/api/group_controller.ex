@@ -4,6 +4,8 @@ defmodule Doom.Api.GroupController do
   import Doom.Api.Authorize
   alias Doom.Group
 
+  def action(conn, _), do: authorize_action conn, ["admin", "user"], __MODULE__
+
   def create(conn, %{"group" => group_params}) do
     changeset = Group.changeset(%Group{}, group_params)
     case Repo.insert(changeset) do

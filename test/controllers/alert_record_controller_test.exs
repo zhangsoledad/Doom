@@ -1,5 +1,5 @@
 defmodule Doom.AlertRecordControllerTest do
-  use Doom.ConnCase
+  use Doom.ConnCase, async: true
 
   @valid_attrs %{}
   @invalid_attrs %{}

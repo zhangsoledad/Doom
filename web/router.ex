@@ -12,6 +12,8 @@ defmodule Doom.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :protect_from_forgery
     plug Openmaize.Authenticate
   end
 

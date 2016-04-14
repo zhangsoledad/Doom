@@ -1,5 +1,5 @@
 defmodule Doom.AlertRecordTest do
-  use Doom.ModelCase
+  use Doom.ModelCase, async: true
 
   alias Doom.AlertRecord
 
