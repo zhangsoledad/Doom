@@ -32,7 +32,7 @@
   "idna": {:hex, :idna, "1.2.0"},
   "inch_ex": {:hex, :inch_ex, "0.5.1"},
   "jsx": {:hex, :jsx, "2.6.2"},
-  "mailman": {:git, "https://github.com/zhangsoledad/mailman.git", "4acf4bc9d53e0d7a638fb02b87964709bc2f96bb", []},
+  "mailman": {:git, "https://github.com/zhangsoledad/mailman.git", "942e6d1e1b746a33618e7693728e5ae4a1efdec8", []},
   "metrics": {:hex, :metrics, "1.0.1"},
   "mimerl": {:hex, :mimerl, "1.0.2"},
   "mochiweb_html": {:hex, :mochiweb_html, "2.13.0"},
