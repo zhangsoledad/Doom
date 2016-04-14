@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-md-4">
         <%= render Doom.SharedView, "flash.html", assigns %>
-        <%= form_for @changeset, admin_user_path(@conn, :create), fn f -> %>
+        <%= form_for @new_user, admin_user_path(@conn, :create), fn f -> %>
           <div class="form-group">
             <%= email_input f, :email, class: "form-control", required: "", placeholder: "Email" %>
           </div>
@@ -14,7 +14,7 @@
             <%= text_input f, :password, class: "form-control",required: "", placeholder: "Password" %>
           </div>
           <div class="form-group">
-            <%= multiple_select f, :groups, @all_groups,
+            <%= multiple_select f, :groups, @groups |> Enum.map(&({&1.name, &1.id})),
                 selected: [] ,
                 class: "form-control chosen-select",
                 data: [placeholder: "Choose Group"],

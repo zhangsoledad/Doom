@@ -11,72 +11,35 @@
 # and so on) as they will fail if something goes wrong.
 
 users = [
-  %{
+  %Doom.User{
     email: "787953403@qq.com",
     username: "soledad",
     password_hash: Comeonin.Bcrypt.hashpwsalt("1234567"),
     role: "admin",
     confirmed_at: Ecto.DateTime.utc,
-    bio: "Lord Soledad."
+    bio: "Lord Soledad.",
+    groups: [ %Doom.Group{name: "admin"} ]
   },
-  %{
+  %Doom.User{
     email: "a@souche.com",
     username: "a",
     password_hash: Comeonin.Bcrypt.hashpwsalt("1234567"),
-    role: "admin",
+    role: "user",
     confirmed_at: Ecto.DateTime.utc,
-    bio: "Lord Soledad."
+    bio: "Lord Soledad.",
+    groups: [ %Doom.Group{name: "group-a"} ]
   },
-  %{
+  %Doom.User{
     email: "b@souche.com",
     username: "b",
     password_hash: Comeonin.Bcrypt.hashpwsalt("1234567"),
-    role: "admin",
+    role: "user",
     confirmed_at: Ecto.DateTime.utc,
-    bio: "Lord Soledad."
-  },
-  %{
-    email: "c@souche.com",
-    username: "c",
-    password_hash: Comeonin.Bcrypt.hashpwsalt("1234567"),
-    role: "admin",
-    confirmed_at: Ecto.DateTime.utc,
-    bio: "Lord Soledad."
-  },
-  %{
-    email: "d@souche.com",
-    username: "d",
-    password_hash: Comeonin.Bcrypt.hashpwsalt("1234567"),
-    role: "admin",
-    confirmed_at: Ecto.DateTime.utc,
-    bio: "Lord Soledad."
-  },
-  %{
-    email: "e@souche.com",
-    username: "e",
-    password_hash: Comeonin.Bcrypt.hashpwsalt("1234567"),
-    role: "admin",
-    confirmed_at: Ecto.DateTime.utc,
-    bio: "Lord Soledad."
-  },
-  %{
-    email: "f@souche.com",
-    username: "f",
-    password_hash: Comeonin.Bcrypt.hashpwsalt("1234567"),
-    role: "admin",
-    confirmed_at: Ecto.DateTime.utc,
-    bio: "Lord Soledad."
-  },
-  %{
-    email: "g@souche.com",
-    username: "g",
-    password_hash: Comeonin.Bcrypt.hashpwsalt("1234567"),
-    role: "admin",
-    confirmed_at: Ecto.DateTime.utc,
-    bio: "Lord Soledad."
+    bio: "Lord Soledad.",
+    groups: [ %Doom.Group{name: "group-b"} ]
   }
 ]
 
 for user <- users do
-  Map.merge(%Doom.User{}, user) |> Doom.Repo.insert!
+  user |> Doom.Repo.insert!
 end

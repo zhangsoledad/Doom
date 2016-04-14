@@ -11,11 +11,21 @@ defmodule Doom.Admin.UserController do
   def action(conn, _), do: authorize_action conn, ["admin"], __MODULE__
 
   def index(conn, params) do
+    groups = Repo.all(Group)
     page = Map.get(params, "page", 1)
-    users = User |> Repo.paginate(page: page)
-    all_groups =  Repo.all from g in Group, select: {g.name, g.id}
-    changeset = User.changeset(%User{})
-    render conn,"index.html", users: users, all_groups: all_groups, changeset: changeset
+    group = get_group(groups, params)
+    group_id =  get_group_id(group)
+    users = get_users(group, page)
+
+    new_user = User.changeset(%User{})
+    new_group = Group.changeset(%Group{})
+
+    render conn, "index.html",
+      users: users,
+      new_user: new_user,
+      groups: groups,
+      group_id: group_id,
+      new_group: new_group
   end
 
   def edit(conn, %{"id" => id}) do
@@ -68,5 +78,45 @@ defmodule Doom.Admin.UserController do
         |> put_flash(:errors, changeset.errors)
         |> redirect(to: admin_user_path(conn, :index))
     end
+  end
+
+  defp get_group_id(nil) do
+    1
+  end
+
+  defp get_group_id(group) do
+    group.id
+  end
+
+  defp default_group([]) do
+    nil
+  end
+
+  defp default_group(groups) do
+    groups |> List.first
+  end
+
+  defp get_group(groups, params) do
+    if pgroup_id = Map.get(params, "group_id") do
+      group_id = pgroup_id |> String.to_integer
+      groups |> Enum.find(&(&1.id == group_id))
+    else
+      groups |> default_group
+    end
+  end
+
+  defp get_users(nil, _page) do
+    %Scrivener.Page{
+      page_size: 1,
+      page_number: 1,
+      entries: [],
+      total_entries: 0,
+      total_pages: 1
+    }
+  end
+
+  defp get_users(group, page) do
+    Ecto.assoc(group, :users)
+    |> Repo.paginate(page: page)
   end
 end

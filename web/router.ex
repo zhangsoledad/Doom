@@ -12,6 +12,7 @@ defmodule Doom.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Openmaize.Authenticate
   end
 
   scope "/", Doom do
@@ -42,8 +43,10 @@ defmodule Doom.Router do
      resources "/users", UserController
    end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Doom do
-  #   pipe_through :api
-  # end
+
+   scope "/api", Doom.Api, as: :api do
+     pipe_through :api
+
+     resources "/groups", GroupController, only: [:create]
+   end
 end

@@ -1,0 +1,31 @@
+<div class="col-md-3">
+  <div class="box box-solid">
+    <div class="box-header with-border">
+      <h3 class="box-title">Groups</h3>
+
+      <div class="box-tools">
+
+        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-minus"></i>
+        </button>
+        <button type="button" data-toggle="modal" data-target="#newGroup" class="btn btn-default">
+          New
+        </button>
+      </div>
+    </div>
+    <div class="box-body no-padding ">
+      <ul class="nav nav-pills nav-stacked scroll">
+        <%= for group <- @groups do %>
+          <li class= <%= if group.id == @group_id , do: "active", else: ""%>>
+            <a href=<%= admin_user_path(@conn, :index, group_id: group.id)%>>
+              <i class="fa fa-inbox"></i> <%= group.name %>
+              <span class="label label-primary pull-right"><%= group.users_count %></span>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <!-- /.box-body -->
+  </div>
+</div>
+<%= render Doom.Admin.UserView, "_new_group.html", assigns%>

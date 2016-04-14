@@ -8,6 +8,8 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="csrf-token" content=<%= get_csrf_token %>>
+
 
   <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
 </head>
