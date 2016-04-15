@@ -22,14 +22,14 @@
           </div>
 
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-7">
               <div class="checkbox icheck">
                 <label>
                   <%= checkbox f, :role, class: "minimal-check", checked_value: "admin", unchecked_value: "user" %>&nbsp;&nbsp;Admin
                 </label>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
               <%= submit "Register", class: "btn btn-primary btn-block btn-flat"%>
             </div>
           </div>
