@@ -81,19 +81,11 @@ defmodule Doom.Admin.UserController do
   end
 
   defp get_group_id(nil) do
-    1
+    nil
   end
 
   defp get_group_id(group) do
     group.id
-  end
-
-  defp default_group([]) do
-    nil
-  end
-
-  defp default_group(groups) do
-    groups |> List.first
   end
 
   defp get_group(groups, params) do
@@ -101,18 +93,13 @@ defmodule Doom.Admin.UserController do
       group_id = pgroup_id |> String.to_integer
       groups |> Enum.find(&(&1.id == group_id))
     else
-      groups |> default_group
+      nil
     end
   end
 
-  defp get_users(nil, _page) do
-    %Scrivener.Page{
-      page_size: 1,
-      page_number: 1,
-      entries: [],
-      total_entries: 0,
-      total_pages: 1
-    }
+  defp get_users(nil, page) do
+    User
+    |> Repo.paginate(page: page)
   end
 
   defp get_users(group, page) do

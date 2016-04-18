@@ -15,6 +15,11 @@
     </div>
     <div class="box-body no-padding ">
       <ul class="nav nav-pills nav-stacked scroll">
+        <li class= <%= if @group_id == nil , do: "active", else: ""%>>
+          <a href=<%= admin_user_path(@conn, :index) %>>
+            <i class="fa fa-inbox"></i> All
+          </a>
+        </li>
         <%= for group <- @groups do %>
           <li class= <%= if group.id == @group_id , do: "active", else: ""%>>
             <a href=<%= admin_user_path(@conn, :index, group_id: group.id)%>>
