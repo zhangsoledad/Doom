@@ -31,6 +31,7 @@ defmodule Doom.Task do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> cast_assoc(:groups)
+    |> validate_length(:url, max: 150)
   end
 
   def save_changeset(model, params \\ %{}) do

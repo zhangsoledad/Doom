@@ -16,6 +16,12 @@ defmodule Doom.TaskTest do
     refute changeset.valid?
   end
 
+  test "changeset with invalid url" do
+    too_long_url =  Stream.cycle([1]) |> Enum.take(200) |> Enum.join
+    changeset = Task.changeset(%Task{}, %{@valid_attrs | "url" => too_long_url})
+    refute changeset.valid?
+  end
+
   test "changeset with group assoc" do
     group = create(:group)
     changeset = Task.save_changeset(%Task{}, @valid_attrs) |> Ecto.Changeset.put_assoc(:groups, [group])

@@ -24,7 +24,7 @@
         <div class="row">
           <div class="col-sm-9">
             <label for="interval" class="control-label">Url</label>
-            <%= url_input f, :url, placeholder: "Url", class: "form-control input-sm" %>
+            <%= url_input f, :url, placeholder: "Url", class: "form-control input-sm", max: 150 %>
           </div>
           <div class="col-sm-2">
             <label for="method">Method</label>
