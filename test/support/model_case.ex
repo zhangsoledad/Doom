@@ -28,6 +28,12 @@ defmodule Doom.ModelCase do
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Doom.Repo)
+
+    unless tags[:async] do
+      Ecto.Adapters.SQL.Sandbox.mode(Doom.Repo, {:shared, self()})
+    end
+
+    :ok
   end
 
   @doc """

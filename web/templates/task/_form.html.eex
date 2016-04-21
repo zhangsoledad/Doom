@@ -2,150 +2,152 @@
   <div class="box-header with-border">
     <h3 class="box-title"><%= @path %> Task</h3>
   </div>
-    <%= form_for @changeset, @action, fn f -> %>
-      <%= if @changeset.action do %>
-        <div class="alert alert-danger">
-          <p>Oops, something went wrong! Please check the errors below.</p>
-        </div>
-      <% end %>
+  <%= form_for @changeset, @action, fn f -> %>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
 
-      <div class="box-body">
-        <div class="row">
-          <div class="col-sm-6">
-            <label for="name" class="control-label">Name</label>
-            <%= text_input f, :name, placeholder: "Name", class: "form-control input-sm", required: true %>
-          </div>
-          <div class="col-sm-5">
-            <label for="interval" class="control-label">Interval</label>
-             <%= number_input f, :interval, placeholder: "Interval(minutes)", class: "form-control input-sm", min: 1 %>
-          </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="name" class="control-label">Name</label>
+          <%= text_input f, :name, placeholder: "Name", class: "form-control input-sm", required: true %>
         </div>
-        </br>
-        <div class="row">
-          <div class="col-sm-9">
-            <label for="interval" class="control-label">Url</label>
-            <%= url_input f, :url, placeholder: "Url", class: "form-control input-sm", max: 150 %>
-          </div>
-          <div class="col-sm-2">
-            <label for="method">Method</label>
-            <%= select f, :method, ["get","post","put", "patch"], prompt: "method", required: true, class: "form-control input-sm" %>
-          </div>
+        <div class="col-sm-5">
+          <label for="interval" class="control-label">Interval</label>
+           <%= number_input f, :interval, placeholder: "Interval(minutes)", class: "form-control input-sm", min: 1 %>
         </div>
-        </br>
-        <hr>
-        </br>
-        <div class="row">
-          <div class="col-sm-12 json-input" id="json-headers">
-            <label for="headers" class="control-label">Headers</label>
+      </div>
+      </br>
+      <div class="row">
+        <div class="col-sm-9">
+          <label for="interval" class="control-label">Url</label>
+          <%= url_input f, :url, placeholder: "Url", class: "form-control input-sm", max: 150 %>
+        </div>
+        <div class="col-sm-2">
+          <label for="method">Method</label>
+          <%= select f, :method, ["get","post","put", "patch"], prompt: "method", required: true, class: "form-control input-sm" %>
+        </div>
+      </div>
+      </br>
+      <hr>
+      </br>
+      <div class="row">
+        <div class="col-sm-12 json-input" id="json-headers">
+          <label for="headers" class="control-label">Headers</label>
+          <div class="row">
+            <div class="col-sm-4">
+              <%= link "add", to: "javascript:void(0)", class: "json-input-add btn btn-sm btn-link", data: [target: "#json-headers", kname: "task[headers][key][]", vname: "task[headers][value][]"] %>
+            </div>
+          </div>
+          <%= for {key, value} <- (field_value(f, :headers)|| %{}) do %>
             <div class="row">
               <div class="col-sm-4">
-                <%= link "add", to: "javascript:void(0)", class: "json-input-add btn btn-sm btn-link", data: [target: "#json-headers", kname: "task[headers][key][]", vname: "task[headers][value][]"] %>
-              </div>
-            </div>
-            <%= for {key, value} <- (field_value(f, :headers)|| %{}) do %>
-              <div class="row">
-                <div class="col-sm-4">
-                  <%= tag(:input, type: "text", value: key, name: "task[headers][key][]", class: "form-control input-sm") %>
-                </div>
-                <div class="col-sm-4">
-                  <%= tag(:input, type: "text",  value: value, name: "task[headers][value][]", class: "form-control input-sm") %>
-                </div>
-                <div class="col-sm-4">
-                  <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
-                </div>
-              </div>
-            <% end %>
-            <div class="row" id="json-params-init" >
-              <div class="col-sm-4">
-                <%= tag(:input, type: "text", name: "task[headers][key][]", class: "form-control input-sm") %>
+                <%= tag(:input, type: "text", value: key, name: "task[headers][key][]", class: "form-control input-sm") %>
               </div>
               <div class="col-sm-4">
-                <%= tag(:input, type: "text", name: "task[headers][value][]", class: "form-control input-sm") %>
+                <%= tag(:input, type: "text",  value: value, name: "task[headers][value][]", class: "form-control input-sm") %>
               </div>
               <div class="col-sm-4">
                 <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
               </div>
             </div>
+          <% end %>
+          <div class="row" id="json-params-init" >
+            <div class="col-sm-4">
+              <%= tag(:input, type: "text", name: "task[headers][key][]", class: "form-control input-sm") %>
+            </div>
+            <div class="col-sm-4">
+              <%= tag(:input, type: "text", name: "task[headers][value][]", class: "form-control input-sm") %>
+            </div>
+            <div class="col-sm-4">
+              <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
+            </div>
           </div>
         </div>
+      </div>
 
-        </br>
-        <div class="row">
-          <div class="col-sm-12 json-input" id="json-params">
-            <label for="params" class="control-label">Params</label>
+      </br>
+      <div class="row">
+        <div class="col-sm-12 json-input" id="json-params">
+          <label for="params" class="control-label">Params</label>
+          <div class="row">
+            <div class="col-sm-4">
+              <%= link "add", to: "javascript:void(0)", class: "json-input-add btn btn-sm btn-link", data: [target: "#json-params", kname: "task[params][key][]", vname: "task[params][value][]"] %>
+            </div>
+          </div>
+          <%= for {key, value} <- (field_value(f, :params)|| %{}) do %>
             <div class="row">
               <div class="col-sm-4">
-                <%= link "add", to: "javascript:void(0)", class: "json-input-add btn btn-sm btn-link", data: [target: "#json-params", kname: "task[params][key][]", vname: "task[params][value][]"] %>
-              </div>
-            </div>
-            <%= for {key, value} <- (field_value(f, :params)|| %{}) do %>
-              <div class="row">
-                <div class="col-sm-4">
-                  <%= tag(:input, type: "text", value: key, name: "task[params][key][]", class: "form-control input-sm") %>
-                </div>
-                <div class="col-sm-4">
-                  <%= tag(:input, type: "text",  value: value, name: "task[params][value][]", class: "form-control input-sm") %>
-                </div>
-                <div class="col-sm-4">
-                  <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
-                </div>
-              </div>
-            <% end %>
-            <div class="row" id="json-params-init" >
-              <div class="col-sm-4">
-                <%= tag(:input, type: "text", name: "task[params][key][]", class: "form-control input-sm") %>
+                <%= tag(:input, type: "text", value: key, name: "task[params][key][]", class: "form-control input-sm") %>
               </div>
               <div class="col-sm-4">
-                <%= tag(:input, type: "text", name: "task[params][value][]", class: "form-control input-sm") %>
+                <%= tag(:input, type: "text",  value: value, name: "task[params][value][]", class: "form-control input-sm") %>
               </div>
               <div class="col-sm-4">
                 <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
               </div>
             </div>
+          <% end %>
+          <div class="row" id="json-params-init" >
+            <div class="col-sm-4">
+              <%= tag(:input, type: "text", name: "task[params][key][]", class: "form-control input-sm") %>
+            </div>
+            <div class="col-sm-4">
+              <%= tag(:input, type: "text", name: "task[params][value][]", class: "form-control input-sm") %>
+            </div>
+            <div class="col-sm-4">
+              <%= link "remove", to: "javascript:void(0)", class: "json-input-remove btn btn-sm btn-link"%>
+            </div>
           </div>
         </div>
-
-        </br>
-        <div class="row">
-          <div class="col-sm-5">
-            <label for="type" class="control-label">Type</label>
-            <%= select f, :type,  ["json": "json", "html": "html"], class: "form-control input-sm" %>
-          </div>
-        </div>
-
-        </br>
-        <div class="row">
-          <div class="col-sm-11">
-            <label for="expect" class="control-label">Expect</label>
-            <%= textarea f, :expect, placeholder: "Expect", value: Poison.encode!(field_value(f, :expect)),class: "form-control input-sm", required: true %>
-          </div>
-        </div>
-        </br>
-        <div class="row">
-          <div class="col-sm-11">
-            <label for="active" class="control-label">Active</label>&nbsp;
-            <%= checkbox f, :active , class: "minimal-check", checked_value: true, unchecked_value: false %>
-          </div>
-        </div>
-        </br>
-
-        <div class="row">
-          <div class="col-sm-11">
-            <label for="group" class="control-label">Group</label></br>
-            <%= multiple_select f, :groups, @all_groups,
-                selected: (if @path === "Edit", do: Map.get(@changeset.data, :groups), else: []) |>  Enum.map(& "#{&1.id}"),
-                class: "form-control chosen-select input-sm",
-                data: [placeholder: "Choose Group"],
-                name: "group_ids[]",
-                required: true %>
-          </div>
-        </div>
-        </br>
       </div>
 
-      <div class="box-footer">
-        </br>
-        <%= submit "Submit", class: "btn btn-primary" %>
+      </br>
+      <div class="row">
+        <div class="col-sm-5">
+          <label for="type" class="control-label">Type</label>
+          <%= select f, :type,  ["json": "json", "html": "html"], class: "form-control input-sm" %>
+        </div>
       </div>
-      <% end %>
+
+      </br>
+      <div class="row">
+        <div class="col-sm-11">
+          <label for="expect" class="control-label">Expect</label>
+          <%= textarea f, :expect, placeholder: "Expect", value: Poison.encode!(field_value(f, :expect)),class: "form-control input-sm", required: true %>
+        </div>
+      </div>
+      </br>
+      <div class="row">
+        <div class="col-sm-11">
+          <label for="active" class="control-label">Active</label>&nbsp;
+          <%= checkbox f, :active , class: "minimal-check", checked_value: true, unchecked_value: false %>
+        </div>
+      </div>
+      </br>
+
+      <div class="row">
+        <div class="col-sm-11">
+          <label for="group" class="control-label">Group</label></br>
+          <%= multiple_select f, :groups, @all_groups,
+              selected: (if @path === "Edit", do: Map.get(@changeset.data, :groups), else: []) |>  Enum.map(& "#{&1.id}"),
+              class: "form-control chosen-select input-sm",
+              data: [placeholder: "Choose Group"],
+              name: "group_ids[]",
+              required: true %>
+        </div>
+      </div>
+      </br>
+    </div>
+
+    <div class="box-footer">
+      </br>
+      <%= submit "Submit", class: "btn btn-primary" %>
+      <%= link "Test", to: "#", class: "btn btn-success"%>
+    </div>
+  <% end %>
 </div>
+<%= render Doom.TaskView, "_test_result.html" %>

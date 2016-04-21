@@ -14,7 +14,7 @@ config :doom, Doom.Endpoint,
   pubsub: [name: Doom.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-config :doom, Doom.Gettext, default_locale: "zh"
+config :doom, Doom.Gettext, default_locale: "zh_CN"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
@@ -28,6 +28,8 @@ config :openmaize,
   user_model: Doom.User,
   repo: Doom.Repo,
   password_strength: [min_length: 6, extra_chars: false]
+
+config :doom, ecto_repos: [Doom.Repo]
 
 import_config "#{Mix.env}.exs"
 import_config "mailer.exs"
