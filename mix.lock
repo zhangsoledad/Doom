@@ -51,7 +51,7 @@
   "quantum": {:hex, :quantum, "1.7.1"},
   "ranch": {:hex, :ranch, "1.2.1"},
   "relx": {:hex, :relx, "3.18.0"},
-  "scrivener": {:git, "https://github.com/zhangsoledad/scrivener.git", "8b6e676fc339463f9b967412d80520f8f581b353", []},
+  "scrivener": {:git, "https://github.com/zhangsoledad/scrivener.git", "04f0bdede9f30ff49a81d5586c56bbcf0fb933e2", []},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0"},
   "timex": {:hex, :timex, "2.1.4"},
   "tzdata": {:hex, :tzdata, "0.5.7"}}
