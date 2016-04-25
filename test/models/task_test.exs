@@ -3,7 +3,7 @@ defmodule Doom.TaskTest do
 
   alias Doom.Task
 
-  @valid_attrs %{"expect"=> "{\"show\":1}", "interval"=> 42, "name"=> "some content", "params"=> nil, "url" => "some content" ,"method"=> "get"}
+  @valid_attrs %{"expect"=> "{\"show\":1}", "interval"=> 42, "name"=> "some content", "params"=> nil, "url" => "some content" ,"method"=> "get", "type"=> "json"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
@@ -12,7 +12,7 @@ defmodule Doom.TaskTest do
   end
 
   test "changeset with invalid attributes" do
-    changeset = Task.changeset(%Task{}, @invalid_attrs)
+    changeset = Task.save_changeset(%Task{}, @invalid_attrs)
     refute changeset.valid?
   end
 
