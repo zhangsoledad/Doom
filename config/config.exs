@@ -24,6 +24,11 @@ config :phoenix, :generators,
   migration: true,
   binary_id: false
 
+config :alchemic_avatar,
+  cache_base_path: "static/images",
+  annotate_position: "+0+0",
+  app_name: :doom
+
 config :openmaize,
   user_model: Doom.User,
   repo: Doom.Repo,
