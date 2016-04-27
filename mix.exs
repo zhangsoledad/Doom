@@ -58,7 +58,7 @@ defmodule Doom.Mixfile do
      {:floki, "~> 0.8"},
      {:dialyze, "~> 0.2.0", only: :dev},
      {:alchemic_pinyin, "~> 0.1.0"},
-     {:alchemic_avatar, github: "zhangsoledad/alchemic_avatar"},
+     {:alchemic_avatar, "~> 0.1.2"},
      {:openmaize, github: "zhangsoledad/openmaize"},
      {:scrivener, github: "zhangsoledad/scrivener"},
      {:mailman, github: "zhangsoledad/mailman"},

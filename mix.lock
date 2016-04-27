@@ -1,4 +1,4 @@
-%{"alchemic_avatar": {:git, "https://github.com/zhangsoledad/alchemic_avatar.git", "e8cb7c1d83a2277ed1f074eb3b817edcc51fc858", []},
+%{"alchemic_avatar": {:hex, :alchemic_avatar, "0.1.2"},
   "alchemic_pinyin": {:hex, :alchemic_pinyin, "0.1.1"},
   "bbmustache": {:hex, :bbmustache, "1.0.4"},
   "bunt": {:hex, :bunt, "0.1.5"},
