@@ -23,11 +23,6 @@ config :logger, :console,
   metadata: [:request_id],
   level: :error
 
-#TODO
-config :alchemic_avatar,
-  cache_base_path: "lib/doom-0.0.1/priv/static/images",
-  annotate_position: "+0+0"
-
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

@@ -1,4 +1,4 @@
-%{"alchemic_avatar": {:hex, :alchemic_avatar, "0.1.1"},
+%{"alchemic_avatar": {:hex, :alchemic_avatar, "0.1.2"},
   "alchemic_pinyin": {:hex, :alchemic_pinyin, "0.1.1"},
   "bbmustache": {:hex, :bbmustache, "1.0.4"},
   "bunt": {:hex, :bunt, "0.1.5"},
