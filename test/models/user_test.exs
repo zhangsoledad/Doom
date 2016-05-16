@@ -23,7 +23,7 @@ defmodule Doom.UserTest do
   end
 
   test "register_changeset with groups assoc" do
-    group = create(:group)
+    group = insert_group
     {key, _} = Openmaize.ConfirmEmail.gen_token_link(@valid_attrs.email)
     changeset = User.register_changeset(@valid_attrs, key) |> Ecto.Changeset.put_assoc(:groups, [group])
     assert changeset.valid?

@@ -19,8 +19,7 @@ defmodule Doom.Web do
   def model do
     quote do
       use Ecto.Schema
-      use Calecto.Model, usec: true
-      use Calendar
+      use Calecto.Schema, usec: true
 
       import Ecto
       import Ecto.Changeset
@@ -31,7 +30,6 @@ defmodule Doom.Web do
   def controller do
     quote do
       use Phoenix.Controller
-      use Calendar
 
       alias Doom.Repo
       import Ecto
@@ -45,7 +43,6 @@ defmodule Doom.Web do
   def view do
     quote do
       use Phoenix.View, root: "web/templates"
-      use Calendar
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
@@ -69,7 +66,6 @@ defmodule Doom.Web do
   def channel do
     quote do
       use Phoenix.Channel
-      use Calendar
 
       alias Doom.Repo
       import Ecto

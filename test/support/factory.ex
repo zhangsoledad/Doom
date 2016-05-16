@@ -1,32 +1,36 @@
-defmodule Doom.Factory do
-  use ExMachina.Ecto, repo: Doom.Repo
-  alias Doom.{User,Group,Task}
+defmodule Doom.Factory do 
+  alias Doom.{User,Group,Task,Repo}
 
-  def factory(:user) do
+  def insert_user do
     %User{
       username: "soledad",
       role: "admin",
       confirmed_at: Ecto.DateTime.utc,
       password_hash: Comeonin.Bcrypt.hashpwsalt("1234567"),
-      email: sequence(:email, &"email-#{&1}@example.com"),
+      email: "#{random_string(6)}@exmple.com",
       bio: ""
-    }
+    } |> Repo.insert!
   end
 
-  def factory(:group) do
+  def insert_group do
     %Group{
-      name: "test"
-    }
+      name: "#{random_string(6)}"
+    } |> Repo.insert!
   end
 
-  def factory(:task) do
+  def insert_task do
     %Task{
-      name: "test",
+      name: "#{random_string(6)}",
       expect: %{},
       interval: 42,
       params: %{},
       method: "get",
       url: "http://fuckbaidu.com"
-    }
+    } |> Repo.insert!
+  end
+  
+  
+  defp random_string(length) do
+    :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
   end
 end

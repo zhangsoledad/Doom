@@ -14,7 +14,7 @@
   "dependencies": {
     "autoprefixer": "^6.3.5",
     "babel-brunch": "~6.0.0",
-    "brunch": "~2.5.3",
+    "brunch": "2.7.7",
     "clean-css-brunch": "~2.0.0",
     "css-brunch": "~2.0.0",
     "csswring": "^4.2.2",

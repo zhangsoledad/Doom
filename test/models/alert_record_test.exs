@@ -7,7 +7,7 @@ defmodule Doom.AlertRecordTest do
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
-    task = create(:task)
+    task = insert_task
     changeset = AlertRecord.changeset(%AlertRecord{}, %{@valid_attrs| task_id: task.id} )
     assert changeset.valid?
   end

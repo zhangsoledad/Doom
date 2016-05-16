@@ -28,13 +28,13 @@ defmodule Doom.GroupControllerTest do
   end
 
   test "renders form for editing chosen resource", %{conn: conn} do
-    group = create(:group)
+    group = insert_group
     conn = get conn, group_path(conn, :edit, group)
     assert html_response(conn, 200) =~ "Edit Group"
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
-    group = create(:group)
+    group = insert_group
     conn = put conn, group_path(conn, :update, group), group: %{name: "test_update"}
     assert redirected_to(conn) == group_path(conn, :edit, group)
     assert Repo.get_by(Group, name: "test_update")

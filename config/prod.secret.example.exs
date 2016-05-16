@@ -9,7 +9,7 @@ config :doom, Doom.Endpoint,
 # Configure your database
 config :doom, Doom.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "doom_prod",
-  password: "doom_prod",
+  username: "doom",
+  password: "doom",
   database: "doom_prod",
   pool_size: 20

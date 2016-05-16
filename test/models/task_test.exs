@@ -23,7 +23,7 @@ defmodule Doom.TaskTest do
   end
 
   test "changeset with group assoc" do
-    group = create(:group)
+    group = insert_group
     changeset = Task.save_changeset(%Task{}, @valid_attrs) |> Ecto.Changeset.put_assoc(:groups, [group])
     assert changeset.valid?
   end

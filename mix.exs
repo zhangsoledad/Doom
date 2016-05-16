@@ -23,11 +23,11 @@ defmodule Doom.Mixfile do
   end
 
   defp applications(:test) do
-    [:ex_machina | applications(:dev)]
+    applications(:dev)
   end
 
   defp applications(_) do
-    [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
+    [:phoenix, :phoenix_html, :phoenix_pubsub, :cowboy, :logger, :gettext,
      :phoenix_ecto, :postgrex, :quantum, :httpoison, :not_qwerty123, :openmaize,
      :calendar, :calecto, :phoenix_calendar, :scrivener, :floki, :mailman,
      :alchemic_avatar, :alchemic_pinyin]
@@ -41,9 +41,10 @@ defmodule Doom.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.4"},
+    [{:phoenix, "~> 1.2.0-rc"},
+     {:phoenix_pubsub, "~> 1.0.0-rc"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_ecto, "~> 3.0.0-beta"},
+     {:phoenix_ecto, "~> 3.0-rc"},
      {:phoenix_html, "~> 2.5.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
@@ -51,8 +52,8 @@ defmodule Doom.Mixfile do
      {:quantum, "~> 1.7.0"},
      {:exrm, "~> 1.0.2"},
      {:phoenix_calendar, "~> 0.1.2"},
-     {:calecto, "~> 0.5.2"},
-     {:calendar, "~> 0.13"},
+     {:calecto, "~> 0.6.0"},
+     {:calendar, "~> 0.14.0"},
      {:httpoison, "~> 0.8.1"},
      {:not_qwerty123, "~> 1.1"},
      {:floki, "~> 0.8"},
@@ -62,7 +63,7 @@ defmodule Doom.Mixfile do
      {:openmaize, github: "zhangsoledad/openmaize"},
      {:scrivener, github: "zhangsoledad/scrivener"},
      {:mailman, github: "zhangsoledad/mailman"},
-     {:ex_machina, "~> 0.6.1", only: :test},
+     #{:ex_machina, "~> 1.0.0-beta.1", github: "thoughtbot/ex_machina", only: :test},
      {:excoveralls, "~> 0.5", only: :test},
      {:inch_ex, ">= 0.0.0", only: [:dev, :test]},
      {:credo, "~> 0.3", only: [:dev, :test]}]

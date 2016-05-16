@@ -16,7 +16,7 @@ defmodule Doom.TaskControllerTest do
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
-    group = create(:group)
+    group = insert_group
     conn = post conn, task_path(conn, :create), [task: @valid_attrs, group_ids: [group.id]]
     assert redirected_to(conn) == dashboard_path(conn, :index)
     assert Repo.get_by(Task, name: @valid_attrs.name)
@@ -28,14 +28,14 @@ defmodule Doom.TaskControllerTest do
   end
 
   test "renders form for editing chosen resource", %{conn: conn} do
-    task = create(:task)
+    task = insert_task
     conn = get conn, task_path(conn, :edit, task)
     assert html_response(conn, 200) =~ "Edit Task"
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
-    task = create(:task)
-    group = create(:group)
+    task = insert_task
+    group = insert_group
     conn = put conn, task_path(conn, :update, task), [task: @valid_attrs, group_ids: [group.id]]
     assert redirected_to(conn) == dashboard_path(conn, :index)
     assert Repo.get(Task, task.id).name == @valid_attrs.name
