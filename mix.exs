@@ -29,7 +29,7 @@ defmodule Doom.Mixfile do
   defp applications(_) do
     [:phoenix, :phoenix_html, :phoenix_pubsub, :cowboy, :logger, :gettext,
      :phoenix_ecto, :postgrex, :quantum, :httpoison, :not_qwerty123, :openmaize,
-     :calendar, :calecto, :phoenix_calendar, :scrivener, :floki, :mailman,
+     :calendar, :calecto, :scrivener, :floki, :mailman,
      :alchemic_avatar, :alchemic_pinyin]
   end
 
@@ -41,32 +41,31 @@ defmodule Doom.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.0-rc"},
-     {:phoenix_pubsub, "~> 1.0.0-rc"},
+    [{:phoenix, "~> 1.2.0"},
+     {:phoenix_pubsub, "~> 1.0.0"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_ecto, "~> 3.0-rc"},
-     {:phoenix_html, "~> 2.5.1"},
+     {:phoenix_ecto, "~> 3.0"},
+     {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:gettext, "~> 0.9"},
+     {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:quantum, "~> 1.7.0"},
-     {:exrm, "~> 1.0.2"},
-     {:phoenix_calendar, "~> 0.1.2"},
-     {:calecto, "~> 0.6.0"},
-     {:calendar, "~> 0.14.0"},
-     {:httpoison, "~> 0.8.1"},
+     {:exrm, "~> 1.0.6"},
+     {:calecto, "~> 0.16.0"},
+     {:calendar, "~> 0.16.0"},
+     {:httpoison, "~> 0.9.0"},
      {:not_qwerty123, "~> 1.1"},
-     {:floki, "~> 0.8"},
+     {:floki, "~> 0.9"},
      {:dialyze, "~> 0.2.0", only: :dev},
      {:alchemic_pinyin, "~> 0.1.0"},
      {:alchemic_avatar, "~> 0.1.2"},
+     {:scrivener_ecto, "~> 1.0"},
      {:openmaize, github: "zhangsoledad/openmaize"},
-     {:scrivener, github: "zhangsoledad/scrivener"},
      {:mailman, github: "zhangsoledad/mailman"},
      #{:ex_machina, "~> 1.0.0-beta.1", github: "thoughtbot/ex_machina", only: :test},
      {:excoveralls, "~> 0.5", only: :test},
      {:inch_ex, ">= 0.0.0", only: [:dev, :test]},
-     {:credo, "~> 0.3", only: [:dev, :test]}]
+     {:credo, "~> 0.4", only: [:dev, :test]}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
