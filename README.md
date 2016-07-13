@@ -7,7 +7,7 @@ A api monitor system build by [phoenix](http://www.phoenixframework.org/)
 ## Requirements
 
 * Erlang 18.0 +
-* Elixir 1.2.0 +
+* Elixir 1.3.0 +
 * PostgreSQL 9.4 +
 * ImageMagick 6.5+
 
