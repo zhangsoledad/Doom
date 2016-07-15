@@ -5,8 +5,8 @@ exports.config = {
       // To use a separate vendor.js bundle, specify two files path
       // https://github.com/brunch/brunch/blob/stable/docs/config.md#files
       joinTo: {
-        "js/app.js": /^(web\/static\/js)/,
-        "js/vendor.js": /^(web\/static\/vendor)|(node_modules)/
+        "js/app.js": /^(web\/static\/js)|(node_modules)/,
+        "js/vendor.js": /^(web\/static\/vendor)/
       },
       //
       // To change the order of concatenation of files, explicitly mention here
@@ -33,8 +33,9 @@ exports.config = {
           "web/static/vendor/css/admin-lte.css",
           "web/static/vendor/css/skin-blue.css",
           "web/static/vendor/css/minimal.css",
-          "web/static/vendor/css/chosen.css"
-        ]
+          "web/static/vendor/css/chosen.css",
+          "web/static/css/app.css"
+        ] // concat app.css last
       }
     },
     templates: {
@@ -80,9 +81,6 @@ exports.config = {
   },
 
   npm: {
-    enabled: true,
-    // Whitelist the npm deps to be pulled in as front-end assets.
-    // All other deps in package.json will be excluded from the bundle.
-    whitelist: ["phoenix", "phoenix_html"]
+    enabled: true
   }
 };
